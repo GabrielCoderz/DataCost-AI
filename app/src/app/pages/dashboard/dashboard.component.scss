@@ -1,0 +1,142 @@
+/* src/app/dashboard/dashboard.component.scss */
+.dashboard-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para destacar a toolbar */
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px; /* Mais padding */
+  background: linear-gradient(to bottom right, #f8f9fa, #e9ecef); /* Fundo claro e moderno */
+  min-height: calc(100vh - 64px); /* Ajusta a altura considerando a toolbar */
+}
+
+.dashboard-card {
+  max-width: 700px; /* Um pouco mais largo */
+  width: 100%;
+  margin-bottom: 30px; /* Espaço entre os cards */
+  padding: 30px; /* Mais padding interno */
+  border-radius: 12px; /* Cantos mais arredondados */
+  background-color: #ffffff; /* Fundo branco para o card */
+  color: #333; /* Texto escuro */
+
+  mat-card-header {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .card-icon {
+      font-size: 38px; /* Ícone maior */
+      width: 38px;
+      height: 38px;
+      margin-right: 15px;
+      color: #3f51b5; /* Cor primária do Angular Material */
+    }
+
+    mat-card-title {
+      font-size: 2em; /* Título maior */
+      font-weight: 600; /* Mais negrito */
+      color: #212121;
+    }
+    mat-card-subtitle {
+      font-size: 1.1em;
+      color: #616161;
+    }
+  }
+
+  mat-card-content {
+    p {
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .service-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Layout responsivo de botões */
+      gap: 15px; /* Espaçamento entre os botões */
+      margin-bottom: 25px;
+
+      button {
+        height: 60px; /* Botões mais altos */
+        font-size: 1.1em;
+        font-weight: 500;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover:not([disabled]) {
+          transform: translateY(-3px); /* Efeito de elevação ao passar o mouse */
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        mat-icon {
+          margin-right: 10px;
+          font-size: 24px;
+        }
+
+        &.mat-accent {
+          background-color: #ff4081; /* Cor de destaque */
+          color: white;
+        }
+        &.mat-basic[disabled] {
+            background-color: #e0e0e0;
+            color: #a0a0a0;
+            cursor: not-allowed;
+            opacity: 0.7;
+            box-shadow: none;
+        }
+      }
+    }
+
+    .disclaimer-text {
+        font-size: 0.9em;
+        color: #757575;
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px dashed #e0e0e0;
+    }
+  }
+}
+
+.dashboard-info-card {
+  max-width: 700px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #e3f2fd; /* Um azul claro suave */
+  color: #3f51b5; /* Texto em azul primário */
+
+  mat-card-header {
+    mat-card-title {
+      font-size: 1.5em;
+      color: #1a237e; /* Azul mais escuro */
+      font-weight: 500;
+    }
+  }
+  mat-card-content {
+    p {
+      color: #424242;
+      line-height: 1.5;
+    }
+  }
+}
+
+/* Estilos para o toolbar */
+.dashboard-toolbar {
+  span {
+    color: white;
+  }
+}

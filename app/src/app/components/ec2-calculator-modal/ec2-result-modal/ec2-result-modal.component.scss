@@ -1,0 +1,133 @@
+/* src/app/ec2-result-modal/ec2-result-modal.component.scss */
+.result-modal-card {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #ffffff; /* Fundo claro para o modal de resultados */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+  color: #333;
+}
+
+.result-modal-header {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+
+  mat-card-title {
+    font-size: 1.8em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    color: #4CAF50; /* Verde para sucesso */
+
+    mat-icon {
+      margin-right: 12px;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  mat-card-subtitle {
+    font-size: 1em;
+    color: #757575;
+  }
+}
+
+.result-modal-content {
+  padding: 0 15px 15px 15px; /* Padding interno */
+
+  .result-details {
+    margin-bottom: 25px;
+
+    h3 {
+      font-size: 1.4em;
+      color: #3f51b5; /* Azul primário para os títulos de seção */
+      margin-top: 20px;
+      margin-bottom: 10px;
+
+      &:first-of-type {
+          margin-top: 0; // Remove margin top do primeiro h3
+      }
+    }
+
+    .cost-value {
+      font-size: 2.2em; /* Tamanho maior para o valor do custo */
+      font-weight: 700;
+      color: #00897b; /* Um verde-azulado para o custo */
+      text-align: center;
+      // margin-bottom: 25px;
+
+      span {
+        font-size: 0.5em; /* "/ mês" menor */
+        font-weight: 400;
+        color: #757575;
+      }
+    }
+
+    p {
+      margin-bottom: 8px;
+      font-size: 1.05em;
+      color: #424242;
+
+      strong {
+        color: #212121;
+      }
+    }
+
+    .small-text {
+      font-size: 0.9em;
+      color: #757575;
+      margin-top: 10px;
+    }
+
+    mat-divider {
+      margin: 20px 0;
+      background-color: #e0e0e0;
+    }
+  }
+
+  .disclaimer {
+    font-size: 0.85em;
+    color: #9e9e9e;
+    line-height: 1.5;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px;
+    border-left: 3px solid #ffab00; /* Borda laranja para aviso */
+  }
+}
+
+.result-modal-actions {
+  display: flex;
+  justify-content: space-between; /* Espalha os botões */
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 20px;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  button {
+    font-size: 1em;
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    mat-icon {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
+    &.mat-flat-button.mat-accent {
+      background-color: #ff4081; /* Cor accent do Angular Material */
+      color: white;
+    }
+  }
+}

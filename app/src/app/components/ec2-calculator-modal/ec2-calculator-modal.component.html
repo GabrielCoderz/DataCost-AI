@@ -1,0 +1,80 @@
+<mat-card class="modal-card">
+  <mat-card-header class="modal-header">
+    <mat-card-title>
+      <mat-icon color="accent">bolt</mat-icon> Calcular Custo EC2
+    </mat-card-title>
+    <mat-card-subtitle>Insira os requisitos da sua instância para estimar o custo mensal.</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="modal-content">
+    <form [formGroup]="ec2Form" (ngSubmit)="calculatePrice()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Cores de Processamento (vCPUs)</mat-label>
+        <mat-select formControlName="vcpus">
+          <mat-option *ngFor="let vcpu of vcpusOptions" [value]="vcpu">{{ vcpu }} vCPU{{ +vcpu > 1 ? 's' : '' }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="ec2Form.controls['vcpus'].hasError('required')">Campo obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Memória RAM (GiB)</mat-label>
+        <mat-select formControlName="memoryGiB">
+          <mat-option *ngFor="let mem of memoryGiBOptions" [value]="mem">{{ mem }} GiB</mat-option>
+        </mat-select>
+        <mat-error *ngIf="ec2Form.controls['memoryGiB'].hasError('required')">Campo obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Sistema Operacional</mat-label>
+        <mat-select formControlName="operatingSystem">
+          <mat-option *ngFor="let os of operatingSystems" [value]="os">{{ os }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="ec2Form.controls['operatingSystem'].hasError('required')">Campo obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Região da AWS</mat-label>
+        <mat-select formControlName="regionName">
+          <mat-option *ngFor="let region of regionNames" [value]="region">{{ region }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="ec2Form.controls['regionName'].hasError('required')">Campo obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Horas de Uso</mat-label>
+        <input matInput type="number" formControlName="hoursPerMonth" min="1">
+        <mat-hint *ngIf="ec2Form.get('usageFrequencySelection')?.value !== 'custom'">
+          Digite a quantidade total de horas por mês.
+        </mat-hint>
+        <mat-hint *ngIf="ec2Form.get('usageFrequencySelection')?.value === 'custom'">
+          Digite o número de horas de uso por mês.
+        </mat-hint>
+        <mat-error *ngIf="ec2Form.controls['hoursPerMonth'].hasError('required') && ec2Form.get('usageFrequencySelection')?.value === 'custom'">
+          Campo obrigatório
+        </mat-error>
+        <mat-error *ngIf="ec2Form.controls['hoursPerMonth'].hasError('min')">
+          Mínimo de 1 hora
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <div class="radio-group-container">
+        <mat-label class="radio-group-label">Sua carga de trabalho pode ser interrompida?</mat-label>
+        <mat-radio-group formControlName="interruptionTolerance" aria-label="Tolerância à Interrupção" class="radio-group">
+          <mat-radio-button *ngFor="let option of interruptionTolerances" [value]="option.value">
+            {{ option.viewValue }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div> -->
+
+      <div class="modal-actions">
+        <button mat-button (click)="onCancel()" type="button">Cancelar</button>
+        <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">
+          <mat-icon *ngIf="!isLoading">calculate</mat-icon>
+          <mat-spinner color="warn" *ngIf="isLoading" diameter="20"></mat-spinner>
+          {{ isLoading ? '' : 'Calcular' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

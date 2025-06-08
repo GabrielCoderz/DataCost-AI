@@ -1,0 +1,115 @@
+[
+  {
+    "storeLocation": "Um lugar para armazenar arquivos",
+    "needSQL": "Sim",
+    "needVisualization": "Sim",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon QuickSight"
+    ],
+    "justification": "Você pode guardar os arquivos no S3 e conectar com o QuickSight para gerar visualizações simples sem precisar saber SQL."
+  },
+  {
+    "storeLocation": "Um lugar para armazenar arquivos",
+    "needSQL": "Sim",
+    "needVisualization": "Não",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": "O Amazon S3 é ideal para armazenar arquivos de forma segura, econômica e escalável."
+  },
+  {
+    "storeLocation": "Um lugar para armazenar arquivos",
+    "needSQL": "Não",
+    "needVisualization": "Sim",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon QuickSight"
+    ],
+    "justification": "Você pode guardar os arquivos no S3 e conectar com o QuickSight para gerar visualizações simples sem precisar saber SQL."
+  },
+  {
+    "storeLocation": "Um lugar para armazenar arquivos",
+    "needSQL": "Não",
+    "needVisualization": "Não",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": "O Amazon S3 é ideal para armazenar arquivos de forma segura, econômica e escalável."
+  },
+  {
+    "storeLocation": "Um banco de dados para consultas",
+    "needSQL": "Sim",
+    "needVisualization": "Sim",
+    "recommendations": [
+      "Amazon RDS",
+      "Amazon Redshift"
+    ],
+    "justification": "O Amazon RDS oferece bancos relacionais com suporte a SQL. O Redshift é mais indicado para grandes volumes e análises."
+  },
+  {
+    "storeLocation": "Um banco de dados para consultas",
+    "needSQL": "Sim",
+    "needVisualization": "Não",
+    "recommendations": [
+      "Amazon RDS",
+      "Amazon Redshift"
+    ],
+    "justification": "O Amazon RDS oferece bancos relacionais com suporte a SQL. O Redshift é mais indicado para grandes volumes e análises."
+  },
+  {
+    "storeLocation": "Um banco de dados para consultas",
+    "needSQL": "Não",
+    "needVisualization": "Sim",
+    "recommendations": [
+      "Amazon DynamoDB"
+    ],
+    "justification": "O DynamoDB permite armazenar dados estruturados sem necessidade de SQL."
+  },
+  {
+    "storeLocation": "Um banco de dados para consultas",
+    "needSQL": "Não",
+    "needVisualization": "Não",
+    "recommendations": [
+      "Amazon DynamoDB"
+    ],
+    "justification": "O DynamoDB permite armazenar dados estruturados sem necessidade de SQL."
+  },
+  {
+    "storeLocation": "Um sistema de análise para BI/dashboards",
+    "needSQL": "Sim",
+    "needVisualization": "Sim",
+    "recommendations": [
+      "Amazon QuickSight",
+      "Amazon Redshift"
+    ],
+    "justification": "O QuickSight permite criar dashboards com visualizações interativas. O Redshift pode armazenar e consultar grandes volumes de dados com SQL."
+  },
+  {
+    "storeLocation": "Um sistema de análise para BI/dashboards",
+    "needSQL": "Sim",
+    "needVisualization": "Não",
+    "recommendations": [
+      "Amazon QuickSight"
+    ],
+    "justification": "O Amazon QuickSight permite criar visualizações e relatórios a partir de diversas fontes de dados."
+  },
+  {
+    "storeLocation": "Um sistema de análise para BI/dashboards",
+    "needSQL": "Não",
+    "needVisualization": "Sim",
+    "recommendations": [
+      "Amazon QuickSight"
+    ],
+    "justification": "O Amazon QuickSight permite criar visualizações e relatórios a partir de diversas fontes de dados."
+  },
+  {
+    "storeLocation": "Um sistema de análise para BI/dashboards",
+    "needSQL": "Não",
+    "needVisualization": "Não",
+    "recommendations": [
+      "Amazon QuickSight"
+    ],
+    "justification": "O Amazon QuickSight permite criar visualizações e relatórios a partir de diversas fontes de dados."
+  }
+]

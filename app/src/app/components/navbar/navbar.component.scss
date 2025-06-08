@@ -1,0 +1,85 @@
+/* src/app/navbar/navbar.component.scss */
+
+// Variáveis de cores para facilitar a manutenção
+$primary-color: #3f51b5; // Azul Material Design padrão
+$accent-color: #ff4081;  // Rosa Material Design padrão
+$text-color-light: white;
+$text-color-dark: #212121;
+$shadow-color: rgba(0, 0, 0, 0.2);
+$hover-color: rgba(255, 255, 255, 0.1);
+
+mat-toolbar {
+  background-color: $primary-color;
+  color: $text-color-light;
+  height: 64px; // Altura padrão e elegante
+  padding: 0 20px; // Espaçamento lateral interno
+  box-shadow: 0 4px 8px $shadow-color; // Sombra mais proeminente e bonita
+  position: sticky; // Fixa a barra no topo
+  top: 0;
+  z-index: 1000; // Garante que fique acima de outros elementos
+  display: flex;
+  align-items: center; // Alinha os itens verticalmente
+
+  .app-title {
+    font-weight: 500; // Um pouco mais negrito
+    font-size: 1.3em; // Título um pouco maior
+    margin-left: 15px; // Espaçamento maior do ícone
+    letter-spacing: 0.5px; // Um pouco de espaçamento entre as letras
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); // Leve sombra no texto
+  }
+
+  .spacer {
+    flex: 1 1 auto; // Empurra os itens para as pontas
+  }
+
+  // Estilo dos botões de navegação
+  button.mat-button {
+    color: $text-color-light;
+    font-weight: 400; // Peso da fonte padrão
+    font-size: 1.05em; // Tamanho do texto um pouco maior
+    padding: 0 15px; // Padding interno nos botões
+    height: 100%; // Ocupa a altura total da toolbar
+    border-radius: 0; // Bordas quadradas para um visual limpo na barra
+
+    &:hover {
+      background-color: $hover-color; // Efeito de hover suave
+      border-bottom: 3px solid $accent-color; // Linha inferior colorida ao passar o mouse
+      transition: all 0.3s ease-in-out; // Transição suave
+    }
+
+    // Estilo para o botão ativo (se for a rota atual)
+    // Usar [routerLinkActive]="['active-link']" no HTML e estilizar .active-link
+    &.active-link {
+      font-weight: 500;
+      border-bottom: 3px solid $accent-color; // Sempre ativo na rota atual
+      background-color: rgba(255, 255, 255, 0.15); // Fundo levemente diferente para o ativo
+    }
+
+    mat-icon {
+      font-size: 24px; // Tamanho padrão do ícone
+      margin-right: 5px; // Espaçamento entre ícone e texto do botão
+    }
+  }
+
+  // Estilo do botão de ícone (ex: home)
+  button.mat-icon-button {
+    color: $text-color-light;
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+
+  // Pequenos ajustes para responsividade (opcional, mas recomendado)
+  @media (max-width: 768px) {
+    .app-title {
+      font-size: 1.1em;
+      margin-left: 8px;
+    }
+    button.mat-button {
+      font-size: 0.9em;
+      padding: 0 10px;
+    }
+    // Para telas menores, você pode considerar usar um menu hambúrguer com MatSidenav
+    // mas isso exigiria mais mudanças nos componentes.
+  }
+}

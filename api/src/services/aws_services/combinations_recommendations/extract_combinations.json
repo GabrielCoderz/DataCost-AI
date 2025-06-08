@@ -1,0 +1,986 @@
+[
+  {
+    "origin": "API externa",
+    "frequency": "Uma única vez",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Uma única vez",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Uma única vez",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Uma única vez",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Uma única vez",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Diariamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Diariamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Diariamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Diariamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Diariamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "De hora em hora",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "De hora em hora",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "De hora em hora",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "De hora em hora",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "De hora em hora",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Em tempo real, continuamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "Amazon Kinesis Data Firehose"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "Amazon Kinesis Data Firehose"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "Amazon Kinesis Data Firehose"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Boa opção para capturar dados sob demanda via chamadas HTTP."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "Amazon Kinesis Data Firehose",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "API externa",
+    "frequency": "Em tempo real, continuamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS Lambda + Amazon API Gateway",
+      "Amazon Kinesis Data Firehose",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Boa opção para capturar dados sob demanda via chamadas HTTP.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Uma única vez",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Uma única vez",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Uma única vez",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Uma única vez",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Uma única vez",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Diariamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Diariamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Diariamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Diariamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Diariamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "De hora em hora",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "De hora em hora",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "De hora em hora",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon S3"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "De hora em hora",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "De hora em hora",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Em tempo real, continuamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon Kinesis Data Firehose"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon Kinesis Data Firehose"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon Kinesis Data Firehose"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para armazenamento e ingestão de arquivos."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon Kinesis Data Firehose",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Arquivos",
+    "frequency": "Em tempo real, continuamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon S3",
+      "Amazon Kinesis Data Firehose",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para armazenamento e ingestão de arquivos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Uma única vez",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Uma única vez",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Uma única vez",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Uma única vez",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Uma única vez",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Diariamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Diariamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Diariamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Diariamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Diariamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "De hora em hora",
+    "size": "< 100 MB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "De hora em hora",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "De hora em hora",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "De hora em hora",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "De hora em hora",
+    "size": "> 100 GB",
+    "recommendations": [
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Em tempo real, continuamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "AWS DMS"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Recomendado para replicação e migração de dados entre bancos."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Banco de dados",
+    "frequency": "Em tempo real, continuamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "AWS DMS",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Recomendado para replicação e migração de dados entre bancos.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Uma única vez",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Uma única vez",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Uma única vez",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Uma única vez",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Uma única vez",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Diariamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Diariamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Diariamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Diariamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Diariamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "De hora em hora",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "De hora em hora",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "De hora em hora",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "De hora em hora",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "De hora em hora",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Em tempo real, continuamente",
+    "size": "< 100 MB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 100 MB e 1 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 1 GB e 10 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "Amazon Kinesis Data Streams"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para ingestão de dados em tempo real."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Em tempo real, continuamente",
+    "size": "Entre 10 GB e 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  },
+  {
+    "origin": "Dados em tempo real",
+    "frequency": "Em tempo real, continuamente",
+    "size": "> 100 GB",
+    "recommendations": [
+      "Amazon Kinesis Data Firehose",
+      "Amazon Kinesis Data Streams",
+      "AWS Snowcone"
+    ],
+    "justification": [
+      "Recomendado para ingestão contínua e envio direto ao destino.",
+      "Ideal para ingestão de dados em tempo real.",
+      "Ideal para cargas de dados maiores e mais seguras."
+    ]
+  }
+]

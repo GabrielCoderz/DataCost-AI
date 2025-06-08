@@ -1,0 +1,311 @@
+[
+  {
+    "complexity": "Simples",
+    "frequency": "Sob demanda",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações simples e não contínuas podem ser facilmente orquestradas com Glue."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Sob demanda",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações simples e não contínuas podem ser facilmente orquestradas com Glue."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Sob demanda",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações simples e não contínuas podem ser facilmente orquestradas com Glue."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Agendado",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações simples e não contínuas podem ser facilmente orquestradas com Glue."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Agendado",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações simples e não contínuas podem ser facilmente orquestradas com Glue."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Agendado",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações simples e não contínuas podem ser facilmente orquestradas com Glue."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Em tempo real",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "AWS Lambda",
+      "Kinesis Data Analytics"
+    ],
+    "justification": [
+      "Transformações simples em fluxo contínuo podem ser feitas com Lambda ou Kinesis."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Em tempo real",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "AWS Lambda",
+      "Kinesis Data Analytics"
+    ],
+    "justification": [
+      "Transformações simples em fluxo contínuo podem ser feitas com Lambda ou Kinesis."
+    ]
+  },
+  {
+    "complexity": "Simples",
+    "frequency": "Em tempo real",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "AWS Lambda",
+      "Kinesis Data Analytics"
+    ],
+    "justification": [
+      "Transformações simples em fluxo contínuo podem ser feitas com Lambda ou Kinesis."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Sob demanda",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de complexidade média são suportadas eficientemente pelo AWS Glue."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Sob demanda",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de complexidade média são suportadas eficientemente pelo AWS Glue."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Sob demanda",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de complexidade média são suportadas eficientemente pelo AWS Glue."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Agendado",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de complexidade média são suportadas eficientemente pelo AWS Glue."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Agendado",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de complexidade média são suportadas eficientemente pelo AWS Glue."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Agendado",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de complexidade média são suportadas eficientemente pelo AWS Glue."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Em tempo real",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "Amazon Kinesis Data Analytics"
+    ],
+    "justification": [
+      "Processamentos intermediários com joins em tempo real são indicados com Kinesis Analytics."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Em tempo real",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "Amazon Kinesis Data Analytics"
+    ],
+    "justification": [
+      "Processamentos intermediários com joins em tempo real são indicados com Kinesis Analytics."
+    ]
+  },
+  {
+    "complexity": "Média",
+    "frequency": "Em tempo real",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "Amazon Kinesis Data Analytics"
+    ],
+    "justification": [
+      "Processamentos intermediários com joins em tempo real são indicados com Kinesis Analytics."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Sob demanda",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Sob demanda",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Sob demanda",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Agendado",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Agendado",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Agendado",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Em tempo real",
+    "duration": "Menos de 5 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Em tempo real",
+    "duration": "Entre 5 e 30 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+    ]
+  },
+  {
+    "complexity": "Alta",
+    "frequency": "Em tempo real",
+    "duration": "Mais de 30 minutos",
+    "recommendations": [
+      "Amazon EMR",
+      "AWS Glue"
+    ],
+    "justification": [
+      "Transformações de alta complexidade exigem processamento distribuído e escalável, como o EMR ou Glue com PySpark."
+      ]
+  }
+]

@@ -1,0 +1,166 @@
+/* src/app/ec2-calculator/ec2-calculator.component.scss */
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa a altura total da viewport */
+  background: linear-gradient(to right bottom, #424242, #1a1a1a); /* Fundo escuro sutil */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.calculator-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Alinhar ao topo para permitir scroll se a tela for pequena */
+  width: 100%;
+  max-width: 500px; /* Largura máxima do card */
+}
+
+.calculator-card {
+  width: 100%;
+  border-radius: 12px; /* Cantos mais suaves */
+  overflow: hidden; /* Garante que o raio de borda funcione com o header */
+  // background-color: #303030; /* Fundo mais escuro para o card */
+  color: #e0e0e0; /* Texto claro */
+
+  mat-card-header {
+    background-color: #3f51b5; /* Cor primária do Material */
+    color: white;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      margin-right: 12px;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+
+    mat-card-title {
+      font-size: 1.8em;
+      font-weight: 500;
+    }
+
+    mat-card-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9em;
+    }
+  }
+
+  mat-card-content {
+    padding: 24px;
+
+    .full-width {
+      width: 100%;
+      margin-bottom: 16px; /* Espaçamento entre os campos */
+    }
+
+    mat-form-field {
+      .mat-form-field-label {
+        color: #bbdefb !important; /* Cor mais clara para o label */
+      }
+      .mat-form-field-outline {
+        color: #64b5f6 !important; /* Cor da borda do outline */
+      }
+      .mat-form-field-flex {
+        background-color: #424242 !important; /* Fundo do input */
+      }
+      .mat-input-element {
+        color: #e0e0e0 !important; /* Cor do texto digitado */
+      }
+      .mat-select-value-text {
+        color: #e0e0e0 !important;
+      }
+      .mat-select-arrow {
+        color: #e0e0e0 !important;
+      }
+      .mat-hint {
+        color: rgba(255, 255, 255, 0.6) !important;
+      }
+    }
+
+    .calculate-button {
+      margin-top: 16px;
+      height: 48px; /* Botão um pouco maior */
+      font-size: 1.1em;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+      mat-spinner {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  mat-card-footer {
+    padding: 16px 24px 24px 24px; /* Mais padding no bottom */
+    background-color: #303030; /* Mesma cor do card */
+
+    .mat-divider {
+      background-color: rgba(255, 255, 255, 0.12); /* Divisor mais suave */
+      margin-bottom: 20px;
+    }
+
+    .result-section {
+      background-color: #263238; /* Fundo levemente mais escuro para o resultado */
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #4a4a4a; /* Borda sutil */
+
+      h3 {
+        color: #81c784; /* Verde para destacar o título do resultado */
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      p {
+        margin-bottom: 5px;
+        font-size: 1.1em;
+      }
+
+      .small-text {
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .disclaimer {
+        font-size: 0.8em;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 15px;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+/* Estilos para o overlay do select (dropdown) */
+.cdk-overlay-pane {
+  .mat-option {
+    color: #e0e0e0;
+    &:hover:not(.mat-option-disabled) {
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+    &.mat-selected:not(.mat-option-multiple) {
+      background: #424242 !important; // Selected option in dark theme
+      color: #9fa8da !important; // Highlight color
+    }
+  }
+  .mat-select-panel {
+    background: #303030; // Background of the select dropdown
+  }
+}
+
+/* Ajustes para o snackbar */
+.mat-snack-bar-container {
+  background-color: #424242 !important;
+  color: #e0e0e0 !important;
+  .mat-simple-snackbar-action {
+    color: #9fa8da !important;
+  }
+}

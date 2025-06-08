@@ -1,0 +1,45 @@
+<mat-card class="result-modal-card">
+  <mat-card-header class="result-modal-header">
+    <mat-card-title>
+      <mat-icon color="accent">check_circle</mat-icon> Custo EC2 Estimado
+    </mat-card-title>
+    <mat-card-subtitle>Detalhes da sua estimativa de custo mensal.</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="result-modal-content">
+    <div class="result-details">
+      <!-- <h3>Custo Total Estimado:</h3> -->
+      <p class="cost-value">{{ data.currency }} {{ data.monthlyCost | number:'1.2-2' }} <span>/ mês</span></p>
+
+      <mat-divider></mat-divider>
+
+      <h3>Detalhes da Instância Recomendada:</h3>
+      <p><strong>Tipo de Instância:</strong> {{ data.instanceType }}</p>
+      <p><strong>vCPUs:</strong> {{ data.vcpus }}</p>
+      <p><strong>Memória:</strong> {{ data.memoryGiB }} GiB</p>
+      <p><strong>Sistema Operacional:</strong> {{ data.operatingSystem }}</p>
+      <p><strong>Região:</strong> {{ data.regionName }}</p>
+      <p><strong>Horas de Uso:</strong> {{ data.hoursPerMonth }} h/mês</p>
+      <!-- <p><strong>Tolerância a Interrupções:</strong> {{ data.interruptionTolerance === 'yes' ? 'Sim' : 'Não' }}</p> -->
+      <!-- <p class="small-text">Preço base por {{ data.basePriceUnit }}.</p> -->
+    </div>
+
+    <p class="disclaimer">
+      *Esta estimativa é baseada nos preços On-Demand atuais da AWS e não inclui custos adicionais como EBS,
+      transferência de dados, IPs elásticos ou impostos. Os preços podem variar e as instâncias são recomendadas
+      com base nos critérios fornecidos.
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="result-modal-actions">
+    <button mat-flat-button color="accent" (click)="onSave()">
+      <mat-icon>save</mat-icon> Salvar Resultado
+    </button>
+    <span class="spacer"></span> <button mat-button (click)="onGoBack()">
+      <mat-icon>arrow_back</mat-icon> Voltar
+    </button>
+    <button mat-raised-button color="primary" (click)="onClose()">
+      <mat-icon>close</mat-icon> Fechar
+    </button>
+  </mat-card-actions>
+</mat-card>

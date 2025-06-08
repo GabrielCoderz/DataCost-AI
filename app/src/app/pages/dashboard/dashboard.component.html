@@ -1,0 +1,47 @@
+<!-- <mat-toolbar color="primary" class="dashboard-toolbar">
+  <span>Meu Dashboard AWS (Eng. de Dados)</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-icon-button aria-label="Ícone de configurações">
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar> -->
+
+<div class="dashboard-container">
+  <mat-card class="dashboard-card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon color="primary" class="card-icon">analytics</mat-icon> Ferramentas de Engenharia de Dados
+      </mat-card-title>
+      <mat-card-subtitle>Selecione uma ferramenta para simular e otimizar custos.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="service-buttons-grid">
+        <button mat-raised-button color="accent" (click)="openEc2CalculatorModal()">
+          <mat-icon>cloud_queue</mat-icon> Calcular Custo EC2
+        </button>
+        <button mat-raised-button color="basic" disabled>
+          <mat-icon>storage</mat-icon> Calcular Custo S3 (Em Breve)
+        </button>
+        <button mat-raised-button color="basic" disabled>
+          <mat-icon>database</mat-icon> Calcular Custo RDS (Em Breve)
+        </button>
+        <button mat-raised-button color="basic" disabled>
+          <mat-icon>data_usage</mat-icon> Calcular Custo Glue (Em Breve)
+        </button>
+      </div>
+      <p class="disclaimer-text">
+        Nosso objetivo é ajudá-lo a encontrar a melhor configuração com o menor custo possível para suas necessidades de engenharia de dados.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="dashboard-info-card mat-elevation-z4">
+    <mat-card-header>
+      <mat-card-title>Visão Geral</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Este dashboard é uma ferramenta para simular e otimizar custos de serviços AWS focados em cargas de trabalho de engenharia de dados. Comece clicando em "Calcular Custo EC2" para simular o preço de uma instância de servidor.</p>
+    </mat-card-content>
+  </mat-card>
+
+</div>

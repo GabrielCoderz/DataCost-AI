@@ -1,0 +1,52 @@
+{
+  "extracao": {
+    "api": {
+      "servicos": ["AWS Lambda", "Amazon S3"],
+      "descricao": "Use o AWS Lambda para extrair dados de APIs e armazene no Amazon S3."
+    },
+    "arquivo": {
+      "servicos": ["Amazon S3"],
+      "descricao": "Armazene arquivos de entrada no Amazon S3."
+    },
+    "banco": {
+      "servicos": ["AWS DMS", "Amazon S3"],
+      "descricao": "Use o DMS para extrair dados de bancos relacionais para o S3."
+    },
+    "streaming": {
+      "servicos": ["Amazon Kinesis", "AWS Lambda"],
+      "descricao": "Use Kinesis para ingestão em tempo real e Lambda para processamento."
+    }
+  },
+  "transformacao": {
+    "simples": {
+      "servicos": ["AWS Lambda"],
+      "descricao": "Lambda é ideal para transformações simples com baixo custo."
+    },
+    "media": {
+      "servicos": ["AWS Glue"],
+      "descricao": "Use Glue para processamentos moderadamente complexos."
+    },
+    "alta": {
+      "servicos": ["AWS Glue", "Amazon EMR"],
+      "descricao": "Para cargas pesadas, utilize Glue ou EMR."
+    }
+  },
+  "carga": {
+    "s3": {
+      "servicos": ["Amazon S3"],
+      "descricao": "Dados finais podem ser armazenados no S3."
+    },
+    "rds": {
+      "servicos": ["Amazon RDS"],
+      "descricao": "Carregue os dados no banco relacional RDS."
+    },
+    "athena": {
+      "servicos": ["Amazon Athena"],
+      "descricao": "Use Athena para consultar dados direto no S3 com SQL."
+    },
+    "dashboard_sim": {
+      "servicos": ["Amazon QuickSight"],
+      "descricao": "Visualize os dados em dashboards usando QuickSight."
+    }
+  }
+}
