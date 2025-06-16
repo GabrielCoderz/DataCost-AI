@@ -1,0 +1,130 @@
+// Variáveis (opcional, mas boa prática para temas)
+$primary-color: #007bff; // Azul vibrante
+$secondary-color: #6c757d; // Cinza para textos secundários
+$border-color: #ced4da; // Cor da borda para inputs
+$background-color: #f8f9fa; // Fundo da página
+$card-background: #ffffff; // Fundo do cartão de login
+$text-color: #343a40; // Cor principal do texto
+
+.login-container {
+  display: flex; // Usa flexbox para centralizar
+  justify-content: center; // Centraliza horizontalmente
+  align-items: center; // Centraliza verticalmente
+  min-height: 100vh; // Garante que ocupa a altura total da viewport
+  background-color: $background-color;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; // Fonte agradável
+  padding: 20px; // Espaçamento interno para telas menores
+  box-sizing: border-box; // Garante que padding não estoure o tamanho
+}
+
+.login-card {
+  background-color: $card-background;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); // Sombra suave
+  width: 100%;
+  max-width: 400px; // Largura máxima do cartão
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.login-title {
+  color: $primary-color;
+  margin-bottom: 10px;
+  font-size: 2em; // Tamanho grande para o título
+  font-weight: 600;
+}
+
+.login-subtitle {
+  color: $secondary-color;
+  margin-bottom: 30px;
+  font-size: 1em;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left; // Alinha label e input à esquerda
+}
+
+.form-label {
+  display: block; // Faz a label ocupar sua própria linha
+  margin-bottom: 8px;
+  color: $text-color;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  font-size: 1em;
+  color: $text-color;
+  box-sizing: border-box; // Inclui padding na largura total
+
+  &:focus { // Estilo ao focar no input
+    border-color: $primary-color;
+    outline: none; // Remove o contorno padrão do navegador
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+  }
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease; // Transição suave ao passar o mouse
+
+  &:hover {
+    background-color: darken($primary-color, 10%); // Escurece um pouco ao passar o mouse
+  }
+}
+
+.login-links {
+  margin-top: 25px;
+  font-size: 0.9em;
+
+  a {
+    color: $primary-color;
+    text-decoration: none; // Remove sublinhado padrão
+    margin: 0 10px; // Espaçamento entre os links
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($primary-color, 15%);
+    }
+  }
+
+  .forgot-password-link {
+    // Estilos específicos para o link de esqueceu a senha, se houver
+  }
+
+  .register-link {
+    // Estilos específicos para o link de registro, se houver
+    cursor: pointer;
+    font-weight: 500; // Um pouco mais destacado
+  }
+}
+
+// Media Queries para responsividade
+@media (max-width: 600px) {
+  .login-card {
+    padding: 30px 20px; // Menos padding em telas pequenas
+    margin: 0 15px; // Margem para não colar nas bordas da tela
+  }
+
+  .login-title {
+    font-size: 1.8em;
+  }
+}

@@ -23,16 +23,15 @@ class OpenAIRecommendationService {
   private async run(prompt: string) {
     try {
       const response = await this.client.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4o',
         messages: [
           {
             role: 'system',
-            content:
-              'Ajude um leigo que queira criar um projeto em engenharia de dados e recomende serviços da aws.',
+            content: 'Você é um arquiteto de soluções especialista em AWS.',
           },
           {
             role: 'user',
-            content: prompt,
+            content: `${JSON.stringify(prompt)}`
           },
         ],
         temperature: 0.4,

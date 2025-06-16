@@ -1,15 +1,16 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="authService.isAuthenticated()">
   <button mat-icon-button routerLink="/dashboard" aria-label="Home" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
     <mat-icon>home</mat-icon>
   </button>
-  <span class="app-title">Gestão de Custos</span>
+  <span class="app-title">Data Cost</span>
   <span class="spacer"></span>
 
-  <button mat-button routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+  <!-- <button mat-button routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
     Dashboard
-  </button>
-  <button mat-button routerLink="/recomendador" routerLinkActive="active-link">
-    Recomendador
+  </button> -->
+
+  <button mat-icon-button (click)="onLogout()">
+    <mat-icon>logout</mat-icon>
   </button>
 
   <button mat-icon-button aria-label="Configurações">

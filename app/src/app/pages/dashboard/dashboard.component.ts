@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { Ec2CalculatorModalComponent } from '../../components/ec2-calculator-modal/ec2-calculator-modal.component';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
+    RouterLink,
     MatCardModule,
     MatIconModule,
     Ec2CalculatorModalComponent, // Importa o modal para poder usá-lo

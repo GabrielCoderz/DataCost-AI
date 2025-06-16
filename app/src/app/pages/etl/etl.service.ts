@@ -20,15 +20,23 @@ export interface EtlInput {
   };
 }
 
+interface RecommendationAIRequest {
+  prompt: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class EtlService {
-  private readonly apiUrl = 'http://localhost:3333/api/v1/users/';
+  private readonly apiUrl = 'http://localhost:3333/api/v1/users';
 
   constructor(private http: HttpClient) {}
 
   getRecommendations(data: EtlInput): Observable<any> {
     return this.http.post<any>(this.apiUrl, data);
+  }
+
+  getRecommendationsAI(data: RecommendationAIRequest): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/recommendation/ai`, data);
   }
 }

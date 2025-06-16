@@ -16,11 +16,11 @@
     </mat-card-header>
     <mat-card-content>
       <div class="service-buttons-grid">
-        <button mat-raised-button color="accent" (click)="openEc2CalculatorModal()">
-          <mat-icon>cloud_queue</mat-icon> Calcular Custo EC2
+        <button mat-raised-button color="accent" routerLink="/recomendador">
+          <mat-icon>cloud_queue</mat-icon> Recomendador
         </button>
-        <button mat-raised-button color="basic" disabled>
-          <mat-icon>storage</mat-icon> Calcular Custo S3 (Em Breve)
+        <button mat-raised-button color="accent" (click)="openEc2CalculatorModal()">
+          <mat-icon>storage</mat-icon> Calcular Custo EC2
         </button>
         <button mat-raised-button color="basic" disabled>
           <mat-icon>database</mat-icon> Calcular Custo RDS (Em Breve)

@@ -1,0 +1,119 @@
+// Variáveis (as mesmas do login para consistência)
+$primary-color: #007bff; // Azul vibrante
+$secondary-color: #6c757d; // Cinza para textos secundários
+$border-color: #ced4da; // Cor da borda para inputs
+$background-color: #f8f9fa; // Fundo da página
+$card-background: #ffffff; // Fundo do cartão de registro
+$text-color: #343a40; // Cor principal do texto
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $background-color;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.register-card {
+  background-color: $card-background;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px; // Um pouco mais largo que o login, se necessário
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.register-title {
+  color: $primary-color;
+  margin-bottom: 10px;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.register-subtitle {
+  color: $secondary-color;
+  margin-bottom: 30px;
+  font-size: 1em;
+}
+
+.register-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: $text-color;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  font-size: 1em;
+  color: $text-color;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+  }
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.register-links {
+  margin-top: 25px;
+  font-size: 0.9em;
+
+  .back-to-login-link {
+    color: $primary-color;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($primary-color, 15%);
+    }
+  }
+}
+
+// Media Queries para responsividade
+@media (max-width: 600px) {
+  .register-card {
+    padding: 30px 20px;
+    margin: 0 15px;
+  }
+
+  .register-title {
+    font-size: 1.8em;
+  }
+}

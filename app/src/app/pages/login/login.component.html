@@ -1,0 +1,50 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1 class="login-title">Bem-vindo(a)!</h1>
+    <p class="login-subtitle">Entre na sua conta para continuar.</p>
+
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" id="email" name="email" class="form-input" placeholder="seu@email.com" formControlName="email" required>
+        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+          <div *ngIf="email?.errors?.['required']">
+            E-mail é obrigatório.
+          </div>
+          <div *ngIf="email?.errors?.['email']">
+            E-mail inválido.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Senha</label>
+        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" formControlName="password" required>
+        <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="error-message">
+          <div *ngIf="password?.errors?.['required']">
+            Senha é obrigatória.
+          </div>
+          <div *ngIf="password?.errors?.['minlength']">
+            Senha deve ter pelo menos {{ password?.errors?.['minlength'].requiredLength }} caracteres.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">Entrar</button>
+
+      <div class="login-links">
+        <a routerLink="/register" class="register-link">Criar nova conta</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+/* Adicione este estilo no seu login.component.scss ou em um estilo global */
+.error-message {
+  color: #dc3545; /* Vermelho padrão para erros */
+  font-size: 0.85em;
+  margin-top: 5px;
+  text-align: left;
+}
+</style>
