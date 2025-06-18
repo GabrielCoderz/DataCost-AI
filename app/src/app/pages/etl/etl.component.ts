@@ -10,6 +10,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
 import { NgFor } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormsModule, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { EtlService } from './etl.service';
@@ -47,6 +50,19 @@ interface ArquiteturaSeparada {
   visualization: ServiceItem[];
 }
 
+const ELEMENT_DATA: any[] = [
+    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  ];
+
 @Component({
   selector: 'app-etl',
   standalone: true,
@@ -59,6 +75,9 @@ interface ArquiteturaSeparada {
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
+    MatTabsModule,
+    MatTableModule,
+    MatSelectModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatIconModule,
@@ -90,17 +109,26 @@ export class EtlComponent {
 
   isLoading: boolean = false
 
+  extractSizeSelected = 'mb'
+  transformSizeSelected = 'mb'
+
+  displayedColumns: string[] = ['servico', 'descricao'];
+  public dataSource = ELEMENT_DATA;
+
   constructor(private fb: FormBuilder, private etlService: EtlService) {
     this.etlForm = this.fb.group({
       extract: this.fb.group({
         origin: ['', Validators.required],
         frequency: ['', Validators.required],
-        size: ['', Validators.required],
+        size: [0, Validators.required],
+        processingType: ['', Validators.required],
         services: this.fb.array(this.extractServices.map(() => this.fb.control(false)))
       }),
       transform: this.fb.group({
         complexity: ['', Validators.required],
+        size: [0, Validators.required],
         frequency: ['', Validators.required],
+        processingType: ['', Validators.required],
         duration: ['', Validators.required],
         services: this.fb.array(this.transformServices.map(() => this.fb.control(false)))
       }),
@@ -159,54 +187,59 @@ export class EtlComponent {
 
     console.log(this.extractServices.join(','))
 
-    // console.log(this.etlForm.value.extract.origin)
-
     const msg = `
-            Você é um arquiteto de soluções em nuvem da AWS.
+            Você é um arquiteto de soluções da AWS.
+            Com base no cenário a seguir, recomende uma arquitetura ideal para as etapas EXTRACT, TRANSFORM e LOAD. Indique os serviços mais adequados, com justificativas objetivas e realistas.
 
-            Com base nesse cenário descrito pelo usuário:
+            ### CENÁRIO:
+            - Origem dos dados: ${this.etlForm.value.extract.origin}
+            - Frequência de ingestão: ${this.etlForm.value.extract.frequency}
+            - Volume por ingestão: ${this.etlForm.value.extract.size} ${this.extractSizeSelected}
+            - Tipo de processamento: ${this.etlForm.value.extract.processingType}
 
-            **Extract**
+            - Nível de complexidade da transformação: ${this.etlForm.value.transform.complexity}
+            - Volume médio de dados processado por job: ${this.etlForm.value.transform.size} ${this.transformSizeSelected}
+            - Frequência das transformações: ${this.etlForm.value.transform.frequency}
+            - Duração média de cada transformação: ${this.etlForm.value.transform.duration}
+            - Tipo de processamento: ${this.etlForm.value.transform.processingType}
+            - Serviços preferidos (se selecionados): ${this.etlForm.value.transform.services}
 
-            1.1) Qual é a origem dos dados?
-            ${this.etlForm.value.extract.origin}.
+            ### INSTRUÇÕES:
+            - Caso os volumes de dados sejam muito altos (como neste exemplo), considere usar **Amazon EC2** na etapa de extração, principalmente se:
+              - Há necessidade de controle total do código
+              - São executadas rotinas customizadas de hora em hora
+              - O volume de dados torna serviços como Lambda ou Glue economicamente inviáveis
+              - O **Amazon EC2** deve ser considerado quando o custo-benefício e a flexibilidade justificarem, especialmente em processamento pesado, recorrente ou scripts complexos.
+              - Se usar EC2, indique o tipo de instância, estimativa de horas de uso por mês e o custo estimado baseado no preço por hora.
+              - Use Amazon S3 como armazenamento intermediário se necessário.
+              - Não recomende sempre os mesmos serviços (evite repetir Lambda ou Glue para todo caso). Seja técnico, prático e analítico.
+              - Faça os cálculos usando a moeda em dólar ($) SEMPRE
 
-            1.2) Com que frequência os dados chegam?
-            ${this.etlForm.value.extract.frequecy}.
+            - Para o Transform:
+              - Baseie a recomendação nas características reais do cenário. Evite respostas genéricas.
+              - Considere o uso de AWS Glue, AWS Lambda, Amazon EMR ou Amazon EC2 conforme o perfil da transformação:
+                - Se o volume for alto e houver necessidade de controle total, considere EC2.
+                - Se forem transformações com pipelines complexos ou integração com catálogo de dados, considere Glue.
+                - Se o processamento for simples e rápido, e o volume for baixo, Lambda pode ser viável.
+                - Se forem necessárias bibliotecas específicas, como Spark, e o volume justificar, use EMR.
+              - O serviço EC2 pode ser preferido quando:
+                - O custo do Glue se torna elevado em execuções frequentes
+                - Há necessidade de scripts customizados
+                - O tempo de execução é previsível e controlável
+              - Se recomendar o EC2 ou EMR, especifique:
+                - Tipo da instância
+                - Horas estimadas de uso no mês
+                - Preço por hora e custo estimado mensal (em dólar)
+              - Evite recomendar os mesmos serviços sempre, e não use múltiplos serviços se não houver necessidade clara.
+              - Seja conservador nas estimativas e explique o motivo de qualquer variação de custo.
+              - Se não houver informações suficientes, forneça um intervalo estimado realista, explicando por que o custo pode variar.
 
-            1.3) Qual o tamanho médio dos dados?
-            ${this.etlForm.value.extract.size}.
-
-            1.4) Deseja sugerir serviços específicos? (Aceita apenas se for factível, caso não escolha os serviços que o usuário colocou, faça OBRIGATORIAMENTE a justificativa do por que não foi escolhido)
-            ${this.extractServices.join(',')}.
-
-            **Transform**
-
-            2.1) Qual é o nível de complexidade das transformações nos dados?
-            ${this.etlForm.value.transform.complexity}.
-
-            2.2) Com que frequência os dados precisam ser transformados?
-            ${this.etlForm.value.transform.frequency}.
-
-            2.3) Quais serviços você considera para transformação?
-            ${this.transformServices.join(',')}.
-
-            **Load**
-
-            3.1) Para onde você quer enviar os dados após o processamento?
-            ${this.etlForm.value.load.storeLocation}.
-
-            3.2) Você precisa consultar os dados com SQL?
-            ${this.etlForm.value.load.storeLocation}.
-
-            3.3) Quais serviços você deseja usar para armazenamento?
-            ${this.loadServices.join(',')}.
-
-
-            Recomende uma arquitetura de serviços AWS para cada etapa (EXTRACT, TRANSFORM e LOAD) e seja MUITO breve na justificativa de cada serviço.
-            Seja coerente com a resposta do serviço recomendado.
-            Recomende os serviços corretos para cada etapa.
-            Por exemplo, não recomende um serviço de armazenamento no EXTRACT. Se precisar recomendar, utilize dois serviços para isso, por exemplo, um lambda para extrair e o s3 para armazenar os dados brutos, aí tudo bem.
+            ⚠️ IMPORTANTE:
+            - Avalie se EC2 é necessário de forma realista.
+            - CUIDADO PARA NÃO EXAGERAR NA ESCOLHA DA INSTÂNCIA EC2. AVALIE COM CAUTELA SEMPRE!
+            - Se for, indique o tipo da instância mais adequada, o motivo técnico, e o custo por hora e mensal.
+            - Evite sugerir instâncias exageradas como c5.4xlarge sem justificativa forte.
+            - Se o volume de dados for inferior a 500 MB por job e a frequência de ingestão for até uma vez por hora, recomende AWS Lambda + Amazon S3. Acima disso, considere Amazon EC2 ou Kinesis Data Streams como alternativas mais robustas.
 
             Quando for colocar o titulo EXTRACT, deixe o título assim **EXTRACT**.
             Quando for colocar o titulo TRANSFORM, deixe apenas o título **TRANSFORM**.
@@ -268,16 +301,32 @@ export class EtlComponent {
 
             etc... se houver mais
 
+            ## IMPORTANTE!! NÃO FALHE!
+
+            NUNCA COLOQUE DOIS PONTOS ":". EXEMPLO -> "Custo:" ou "Total:"
+
             **Estimativa de Custo**
 
-            1. **<nome do serviço>**: <explicação detalhada da base de calculo>
+            *EXTRACT*
+            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
 
-            etc... se houver mais
+            repita... se houver mais
 
-            -Custo total: R$ <custo total na moeda brasileira>
+            *TRANSFORM*
+            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
 
-            Esses custos são estimativas e podem variar com base no uso real e nas taxas de câmbio. É importante monitorar o uso e ajustar a arquitetura conforme necessário para otimizar os custos.
+            repita... se houver mais
+
+            *LOAD*
+            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
+
+            repita... se houver mais
+
+            -Custo total: R$ <custo total em dólar>
+
       `
+
+      console.log(msg)
 
     this.etlService.getRecommendationsAI({
       prompt: msg
@@ -287,7 +336,27 @@ export class EtlComponent {
         console.log('Recomendações:', result);
         this.results = this.formatarRespostaGPTComCusto(result);
 
+  //       const ELEMENT_DATA: any[] = [
+  //   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  //   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  //   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  //   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  //   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+  //   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+  //   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+  //   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+  //   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+  //   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  // ];
+
+        this.dataSource = this.results.custoEstimado.detalhado.map((e: any) => ({
+          servico: e.servico,
+          descricao: e.descricao
+        }))
+
         console.log(this.results)
+
+        // this.dataSource = this.results
 
         console.log(this.formatarRespostaGPTComCusto(this.results))
 

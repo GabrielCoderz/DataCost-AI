@@ -21,37 +21,66 @@
 
             <div formGroupName="extract">
 
-              <p>1. De onde os dados são obtidos? *</p>
-              <mat-radio-group formControlName="origin" class="radio-group-responsive" aria-label="Select an option">
+              <p class="radio-group-space">1. Quantidade de dados por job: *</p>
+              <div style="display: flex; align-items: center;">
+                <mat-form-field appearance="outline" class="full-width">
+                  <!-- <mat-label></mat-label> -->
+                  <input matInput type="number" formControlName="size" min="0" placeholder="Ex: 1.5">
+                  <!-- <mat-hint>Informe o volume médio de dados que chega a cada execução de ingestão</mat-hint> -->
+                  <mat-error *ngIf="etlForm.get('extract.size')?.hasError('required')">
+                    Este campo é obrigatório
+                  </mat-error>
+                  <mat-error *ngIf="etlForm.get('extract.size')?.hasError('min')">
+                    O valor deve ser maior ou igual a 0
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-left: 0.2rem;">
+                  <!-- <mat-label>Choose an option</mat-label> -->
+                  <mat-select [(value)]="extractSizeSelected">
+                    <mat-option value="mb">MB</mat-option>
+                    <mat-option value="gb">GB</mat-option>
+                    <mat-option value="tb">TB</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <p>2. De onde os dados são obtidos? *</p>
+              <mat-radio-group formControlName="origin" class="radio-group-responsive" aria-label="Select an option" required>
                 <mat-radio-button value="API externa">API externa (ex: dados públicos, parceiros)</mat-radio-button>
                 <mat-radio-button value="Arquivos">Arquivos (CSV, Excel, JSON)</mat-radio-button>
                 <mat-radio-button value="Banco de dados">Banco de dados (MySQL, PostgreSQL, etc.)</mat-radio-button>
                 <mat-radio-button value="Dados em tempo real">Dados em tempo real (sensores, dispositivos IoT, logs)</mat-radio-button>
               </mat-radio-group>
 
-              <p class="radio-group-space">2. Com que frequência os dados são recebidos? *</p>
-              <mat-radio-group formControlName="frequency" class="radio-group-responsive" aria-label="Select an option">
+              <p class="radio-group-space">3. Com que frequência os dados são recebidos? *</p>
+              <mat-radio-group formControlName="frequency" class="radio-group-responsive" aria-label="Select an option" required>
                 <mat-radio-button value="Uma única vez">Uma única vez</mat-radio-button>
                 <mat-radio-button value="Diariamente">Diariamente</mat-radio-button>
                 <mat-radio-button value="De hora em hora">De hora em hora</mat-radio-button>
                 <mat-radio-button value="Em tempo real">Em tempo real</mat-radio-button>
               </mat-radio-group>
 
-              <p class="radio-group-space">3. Qual o tamanho médio dos dados? *</p>
-              <mat-radio-group formControlName="size" class="radio-group-responsive" aria-label="Select an option">
+              <p class="radio-group-space">4. Qual o tipo de processamento? *</p>
+              <mat-radio-group formControlName="processingType" class="radio-group-responsive" aria-label="Select an option" required>
+                <mat-radio-button value="Batch">Batch</mat-radio-button>
+                <mat-radio-button value="Streaming">Streaming</mat-radio-button>
+              </mat-radio-group>
+
+              <!-- <mat-radio-group formControlName="size" class="radio-group-responsive" aria-label="Select an option" required>
                 <mat-radio-button value="Menor que 100 MB">Menor que 100 MB</mat-radio-button>
                 <mat-radio-button value="Entre 100 MB e 1 GB">Entre 100 MB e 1 GB</mat-radio-button>
                 <mat-radio-button value="Entre 1 GB e 10 GB">Entre 1 GB e 10 GB</mat-radio-button>
                 <mat-radio-button value="Entre 10 GB e 100 GB">Entre 10 GB e 100 GB</mat-radio-button>
                 <mat-radio-button value="Maior que 100 GB">Maior que 100 GB</mat-radio-button>
-              </mat-radio-group>
+              </mat-radio-group> -->
 
-              <p class="radio-group-space">4. Deseja sugerir serviços específicos?</p>
+              <!-- <p class="radio-group-space">4. Deseja sugerir serviços específicos? (Não obrigatório)</p>
               <div formArrayName="services" class="radio-group-responsive">
                 <div *ngFor="let control of extractServicesArray.controls; let i = index">
                   <mat-checkbox [formControlName]="i">{{ extractServices[i] }}</mat-checkbox>
                 </div>
-              </div>
+              </div> -->
 
               <!-- <div>
                 <p class="radio-group-space">3. Qual é o volume estimado por mês?</p>
@@ -62,7 +91,15 @@
               </div> -->
 
               <div class="button-bottom-step-control">
-                <button mat-raised-button color="primary" matStepperNext type="button">Avançar</button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                  [disabled]="etlForm.get('extract.origin')?.invalid || etlForm.get('extract.frequency')?.invalid || etlForm.get('extract.size')?.invalid"
+                >
+                  Avançar
+                </button>
               </div>
             </div>
         </mat-step>
@@ -73,28 +110,57 @@
 
             <div formGroupName="transform">
 
-              <p>1. Quão complexa é a transformação dos dados?</p>
+              <p>1. Qual o volume médio de dados processado por job? *</p>
+
+              <div style="display: flex; align-items: center;">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput type="number" formControlName="size" min="0" placeholder="Ex: 1.5">
+                  <mat-error *ngIf="etlForm.get('transform.size')?.hasError('required')">
+                    Este campo é obrigatório
+                  </mat-error>
+                  <mat-error *ngIf="etlForm.get('transform.size')?.hasError('min')">
+                    O valor deve ser maior ou igual a 0
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-left: 0.2rem;">
+                  <!-- <mat-label>Choose an option</mat-label> -->
+                  <mat-select [(value)]="transformSizeSelected">
+                    <mat-option value="mb">MB</mat-option>
+                    <mat-option value="gb">GB</mat-option>
+                    <mat-option value="tb">TB</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <p>2. Quão complexa é a transformação dos dados? *</p>
               <mat-radio-group formControlName="complexity" aria-label="Select an option">
-                <mat-radio-button value="Simples">Baixa (ex: limpeza simples)</mat-radio-button>
+                <mat-radio-button value="Simples">Baixa (limpeza simples)</mat-radio-button>
                 <mat-radio-button value="Média">Média (joins, agregações)</mat-radio-button>
-                <mat-radio-button value="Alta">Alta (machine learning, pipelines)</mat-radio-button>
+                <mat-radio-button value="Alta">Alta (machine learning)</mat-radio-button>
               </mat-radio-group>
 
-              <p class="radio-group-space">2. Com que frequência os dados são transformados?</p>
+              <p class="radio-group-space">3. Com que frequência os dados são transformados? *</p>
               <mat-radio-group formControlName="frequency" aria-label="Select an option">
-                <mat-radio-button value="Sob demanda">Sob demanda (quando eu quiser).</mat-radio-button>
-                <mat-radio-button value="Agendado" class="spaced">Agendado (ex: uma vez por dia).</mat-radio-button>
-                <mat-radio-button value="Em tempo real" class="spaced">Em tempo real.</mat-radio-button>
+                <mat-radio-button value="Sob demanda">Sob demanda</mat-radio-button>
+                <mat-radio-button value="Agendado" class="spaced">Agendado</mat-radio-button>
+                <mat-radio-button value="Em tempo real" class="spaced">Em tempo real</mat-radio-button>
               </mat-radio-group>
 
-              <p class="radio-group-space">3. Tempo médio da transformação:</p>
+              <p class="radio-group-space">4. Tempo médio da transformação: *</p>
               <mat-radio-group formControlName="duration" aria-label="Select an option">
                 <mat-radio-button value="Menos de 5 minutos">Menos de 5 minutos.</mat-radio-button>
                 <mat-radio-button value="Entre 5 e 30 minutos" class="spaced">Entre 5 e 30 minutos.</mat-radio-button>
                 <mat-radio-button value="Mais de 30 minutos" class="spaced">Mais de 30 minutos.</mat-radio-button>
               </mat-radio-group>
 
-              <p class="radio-group-space">4. Quais serviços você considera para transformação?</p>
+              <p class="radio-group-space">5. Qual o tipo de processamento? *</p>
+              <mat-radio-group formControlName="processingType" class="radio-group-responsive" aria-label="Select an option" required>
+                <mat-radio-button value="Batch">Batch</mat-radio-button>
+                <mat-radio-button value="Streaming">Streaming</mat-radio-button>
+              </mat-radio-group>
+
+              <p class="radio-group-space">6. Quais serviços você considera para transformação? (Não obrigatório)</p>
               <div formArrayName="services">
                 <mat-checkbox *ngFor="let service of transformServices; let i = index" [formControlName]="i">
                   {{ service }}
@@ -108,7 +174,15 @@
               </mat-form-field> -->
 
               <div class="button-bottom-step-control">
-                <button mat-raised-button color="primary" matStepperNext type="button">Avançar</button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                  [disabled]="etlForm.get('transform.complexity')?.invalid || etlForm.get('transform.frequency')?.invalid || etlForm.get('transform.duration')?.invalid"
+                >
+                  Avançar
+                </button>
                 <button mat-stroked-button color="primary" matStepperPrevious type="button">Voltar</button>
               </div>
             </div>
@@ -139,7 +213,7 @@
               <mat-radio-button value="Não">Não</mat-radio-button>
             </mat-radio-group>
 
-            <p class="radio-group-space">4. Quais serviços você deseja usar para armazenamento?</p>
+            <p class="radio-group-space">4. Quais serviços você deseja usar para armazenamento? (Não obrigatório)</p>
             <div formArrayName="services">
               <mat-checkbox *ngFor="let service of loadServices; let i = index" [formControlName]="i">
                 {{ service }}
@@ -149,7 +223,12 @@
             <div class="button-bottom-step-control">
               <!-- <button matButton matStepperPrevious>Back</button>
               <button matButton (click)="stepper.reset()">Reset</button> -->
-              <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+
+              >
                 <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
                 <div *ngIf="!isLoading">
                   Concluir
@@ -164,63 +243,88 @@
   </ng-container>
 
   <ng-container *ngIf="results">
-    <!-- Etapa de Extração -->
-    <mat-card class="etl-card extract">
-      <h2 class="etl-title">🛠️ Etapa de Extração</h2>
-      <div class="etl-content">
-        <p><strong>Origem:</strong> {{ etlForm.value.extract.origin }}</p>
-        <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
-        <p><strong>Tamanho:</strong> {{ etlForm.value.extract.size }}</p>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+      <mat-tab label="Arquitetura">
+        <!-- Etapa de Extração -->
+        <mat-card class="etl-card extract">
+          <h2 class="etl-title">🛠️ Etapa de Extração</h2>
+          <div class="etl-content">
+            <p><strong>Origem:</strong> {{ etlForm.value.extract.origin }}</p>
+            <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
+            <p><strong>Tamanho:</strong> {{ etlForm.value.extract.size }}</p>
 
-        <p class="section-label">Recomendação:</p>
-        <ul>
-          <li *ngFor="let item of results.extract">{{ item.servico }}</li>
-        </ul>
+            <p class="section-label">Recomendação:</p>
+            <ul>
+              <li *ngFor="let item of results.extract">{{ item.servico }}</li>
+            </ul>
 
-        <p class="section-label">Justificativa:</p>
-        <ul>
-          <li *ngFor="let item of results.extract">{{ item.justificativa }}</li>
-        </ul>
-      </div>
-    </mat-card>
+            <p class="section-label">Justificativa:</p>
+            <ul>
+              <li *ngFor="let item of results.extract">{{ item.justificativa }}</li>
+            </ul>
+          </div>
+        </mat-card>
 
-    <!-- Etapa de Transformação -->
-    <mat-card class="etl-card transform">
-      <h2 class="etl-title">🔄 Etapa de Transformação</h2>
-      <div class="etl-content">
-        <p><strong>Complexidade:</strong> {{ etlForm.value.transform.complexity }}</p>
-        <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
+        <!-- Etapa de Transformação -->
+        <mat-card class="etl-card transform">
+          <h2 class="etl-title">🔄 Etapa de Transformação</h2>
+          <div class="etl-content">
+            <p><strong>Complexidade:</strong> {{ etlForm.value.transform.complexity }}</p>
+            <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
 
-        <p class="section-label">Recomendação:</p>
-        <ul>
-          <li *ngFor="let item of results.transform">{{ item.servico }}</li>
-        </ul>
+            <p class="section-label">Recomendação:</p>
+            <ul>
+              <li *ngFor="let item of results.transform">{{ item.servico }}</li>
+            </ul>
 
-        <p class="section-label">Justificativa:</p>
-        <ul>
-          <li *ngFor="let item of results.transform">{{ item.justificativa }}</li>
-        </ul>
-      </div>
-    </mat-card>
+            <p class="section-label">Justificativa:</p>
+            <ul>
+              <li *ngFor="let item of results.transform">{{ item.justificativa }}</li>
+            </ul>
+          </div>
+        </mat-card>
 
-    <!-- Etapa de Carga -->
-    <mat-card class="etl-card load">
-      <h2 class="etl-title">📦 Etapa de Carga</h2>
-      <div class="etl-content">
-        <p><strong>Destino:</strong> {{ etlForm.value.load.storeLocation }}</p>
-        <!-- <p><strong>Precisa de SQL?</strong> {{ etlForm.value.load.needSQL }}</p> -->
+        <!-- Etapa de Carga -->
+        <mat-card class="etl-card load">
+          <h2 class="etl-title">📦 Etapa de Carga</h2>
+          <div class="etl-content">
+            <p><strong>Destino:</strong> {{ etlForm.value.load.storeLocation }}</p>
+            <!-- <p><strong>Precisa de SQL?</strong> {{ etlForm.value.load.needSQL }}</p> -->
 
-        <p class="section-label">Recomendação:</p>
-        <ul>
-          <li *ngFor="let item of results.load">{{ item.servico }}</li>
-        </ul>
+            <p class="section-label">Recomendação:</p>
+            <ul>
+              <li *ngFor="let item of results.load">{{ item.servico }}</li>
+            </ul>
 
-        <p class="section-label">Justificativa:</p>
-        <ul>
-          <li *ngFor="let item of results.load">{{ item.justificativa }}</li>
-        </ul>
-      </div>
-    </mat-card>
+            <p class="section-label">Justificativa:</p>
+            <ul>
+              <li *ngFor="let item of results.load">{{ item.justificativa }}</li>
+            </ul>
+          </div>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="Estimativa de custos">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Position Column -->
+          <ng-container matColumnDef="servico">
+            <th mat-header-cell *matHeaderCellDef> Serviço </th>
+            <td mat-cell *matCellDef="let element"> {{element.servico}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="descricao">
+            <th mat-header-cell *matHeaderCellDef> Descrição </th>
+            <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+
+
+
   </ng-container>
 </div>
 
