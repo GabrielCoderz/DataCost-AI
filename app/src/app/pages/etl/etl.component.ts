@@ -40,6 +40,11 @@ interface ArquiteturaComCusto {
     detalhado: CustoDetalhado[];
     total: string;
     observacao: string;
+    porEtapa: {
+      extract: number;
+      transform: number;
+      load: number;
+    };
   };
 }
 
@@ -109,8 +114,9 @@ export class EtlComponent {
 
   isLoading: boolean = false
 
-  extractSizeSelected = 'mb'
-  transformSizeSelected = 'mb'
+  extractSizeSelected = 'gb'
+  transformSizeSelected = 'gb'
+  loadSizeSelected = 'gb'
 
   displayedColumns: string[] = ['servico', 'descricao'];
   public dataSource = ELEMENT_DATA;
@@ -135,6 +141,8 @@ export class EtlComponent {
       load: this.fb.group({
         storeLocation: ['', Validators.required],
         needSQL: ['', Validators.required],
+        size: [0, Validators.required],
+        frequency: ['', Validators.required],
         needVisualization: ['', Validators.required],
         services: this.fb.array(this.loadServices.map(() => this.fb.control(false)))
       })
@@ -204,18 +212,24 @@ export class EtlComponent {
             - Tipo de processamento: ${this.etlForm.value.transform.processingType}
             - Serviços preferidos (se selecionados): ${this.etlForm.value.transform.services}
 
-            ### INSTRUÇÕES:
-            - Caso os volumes de dados sejam muito altos (como neste exemplo), considere usar **Amazon EC2** na etapa de extração, principalmente se:
-              - Há necessidade de controle total do código
-              - São executadas rotinas customizadas de hora em hora
-              - O volume de dados torna serviços como Lambda ou Glue economicamente inviáveis
-              - O **Amazon EC2** deve ser considerado quando o custo-benefício e a flexibilidade justificarem, especialmente em processamento pesado, recorrente ou scripts complexos.
-              - Se usar EC2, indique o tipo de instância, estimativa de horas de uso por mês e o custo estimado baseado no preço por hora.
-              - Use Amazon S3 como armazenamento intermediário se necessário.
-              - Não recomende sempre os mesmos serviços (evite repetir Lambda ou Glue para todo caso). Seja técnico, prático e analítico.
-              - Faça os cálculos usando a moeda em dólar ($) SEMPRE
+            - Destino dos dados após a transformação: ${this.etlForm.value.load.storeLocation}
+            - O usuário deseja consultar os dados com SQL: ${this.etlForm.value.load.needSQL}
+            - Volume mensal estimado de dados carregados: ${this.etlForm.value.load.size} ${this.transformSizeSelected}
+            - Frequência de carga: ${this.etlForm.value.load.frequency}
 
-            - Para o Transform:
+            ### INSTRUÇÕES:
+            - Para a etapa do Extract:
+              - Caso os volumes de dados sejam muito altos (como neste exemplo), considere usar **Amazon EC2** na etapa de extração, principalmente se:
+                - Há necessidade de controle total do código
+                - São executadas rotinas customizadas de hora em hora
+                - O volume de dados torna serviços como Lambda ou Glue economicamente inviáveis
+                - O **Amazon EC2** deve ser considerado quando o custo-benefício e a flexibilidade justificarem, especialmente em processamento pesado, recorrente ou scripts complexos.
+                - Se usar EC2, indique o tipo de instância, estimativa de horas de uso por mês e o custo estimado baseado no preço por hora.
+                - Use Amazon S3 como armazenamento intermediário se necessário.
+                - Não recomende sempre os mesmos serviços (evite repetir Lambda ou Glue para todo caso). Seja técnico, prático e analítico.
+                - Faça os cálculos usando a moeda em dólar ($) SEMPRE
+
+            - Para a etapa do Transform:
               - Baseie a recomendação nas características reais do cenário. Evite respostas genéricas.
               - Considere o uso de AWS Glue, AWS Lambda, Amazon EMR ou Amazon EC2 conforme o perfil da transformação:
                 - Se o volume for alto e houver necessidade de controle total, considere EC2.
@@ -234,6 +248,14 @@ export class EtlComponent {
               - Seja conservador nas estimativas e explique o motivo de qualquer variação de custo.
               - Se não houver informações suficientes, forneça um intervalo estimado realista, explicando por que o custo pode variar.
 
+            - Para a etapa de Load:
+              - Considere Amazon Redshift, Amazon RDS, Amazon S3, Amazon QuickSight, Athena ou DynamoDB, dependendo das necessidades reais do cenário.
+              - Se o usuário precisa de SQL e dashboards, recomende serviços como Amazon Redshift (para análises complexas).
+              - Evite recomendar serviços caros como Redshift se o volume for pequeno ou o uso simples. Prefira S3 + Athena ou RDS nesses casos.
+              - Se for usar Redshift, especifique o tipo de nó, como dc2.large ou ra3.xlplus, e baseie o custo no número de horas mensais.
+              - Seja conservador nas estimativas.
+              - Nunca recomende serviços desnecessários ou instâncias caras sem justificativa
+
             ⚠️ IMPORTANTE:
             - Avalie se EC2 é necessário de forma realista.
             - CUIDADO PARA NÃO EXAGERAR NA ESCOLHA DA INSTÂNCIA EC2. AVALIE COM CAUTELA SEMPRE!
@@ -247,13 +269,7 @@ export class EtlComponent {
             Quando for colocar o nome do serviço deixe -Serviço: <nome do serviço>
             Quando for colocar a justificativa coloque -Justificativa <justificativa do serviço>
 
-            Ao final de tudo coloque uma estimativa de custo real e correto da aws OBRIGATORIAMENTE. Coloque os custos na moeda real brasileiro (R$)
-
             Explique corretamente a base de calculo de cada serviço recomendado.
-
-            Coloque o Custo Geral somado de todos os serviços recomendados:
-
-            -Custo total <custo total>
 
             ----------------
 
@@ -267,10 +283,6 @@ export class EtlComponent {
             -Serviço: <nome do serviço aceito>
             -Justificativa: <justificativa>
 
-            COLOQUE ABAIXO OS SERVIÇOS QUE VOCÊ RECUSOU DO USUÁRIO NA PERGUNTA 1.4 (Considere todo o cenário para tirar a conclusão CORRETA E COERENTE):
-            -ServiçosRecusado: <nome dos serviços recusados>
-            -Justificativa: <justificativa dos serviços recusados>
-
             etc... se houver mais
 
             **TRANSFORM**
@@ -280,10 +292,6 @@ export class EtlComponent {
 
             -Serviço: <nome do serviço aceito>
             -Justificativa: <justificativa>
-
-            COLOQUE ABAIXO OS SERVIÇOS QUE VOCÊ RECUSOU DO USUÁRIO NA PERGUNTA 2.3 (Considere todo o cenário para tirar a conclusão CORRETA E COERENTE):
-            -ServiçosRecusado: <nome dos serviços recusados>
-            -Justificativa: <justificativa dos serviços recusados>
 
             etc... se houver mais
 
@@ -295,10 +303,6 @@ export class EtlComponent {
             -Serviço: <nome do serviço aceito>
             -Justificativa: <justificativa>
 
-            COLOQUE ABAIXO OS SERVIÇOS QUE VOCÊ RECUSOU DO USUÁRIO NA PERGUNTA 3.3 (Considere todo o cenário para tirar a conclusão CORRETA E COERENTE):
-            -ServiçosRecusado: <nome dos serviços recusados>
-            -Justificativa: <justificativa dos serviços recusados>
-
             etc... se houver mais
 
             ## IMPORTANTE!! NÃO FALHE!
@@ -308,22 +312,22 @@ export class EtlComponent {
             **Estimativa de Custo**
 
             *EXTRACT*
-            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
+            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>.
+            Custo -> <valor final do calculo SEMPRE>
 
             repita... se houver mais
 
             *TRANSFORM*
-            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
+            2. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
+            Custo -> <valor final do calculo SEMPRE>
 
             repita... se houver mais
 
             *LOAD*
-            1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
+            3. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
+            Custo -> <valor final do calculo SEMPRE>
 
             repita... se houver mais
-
-            -Custo total: R$ <custo total em dólar>
-
       `
 
       console.log(msg)
@@ -505,87 +509,120 @@ export class EtlComponent {
   // }
 
   public formatarRespostaGPTComCusto(texto: string): ArquiteturaComCusto {
-    const resultado: ArquiteturaComCusto = {
-      extract: [],
-      transform: [],
-      load: [],
-      custoEstimado: {
-        detalhado: [],
-        total: '0',
-        observacao: ''
+  const resultado: ArquiteturaComCusto = {
+    extract: [],
+    transform: [],
+    load: [],
+    custoEstimado: {
+      detalhado: [],
+      total: '0',
+      observacao: '',
+      porEtapa: {
+        extract: 0,
+        transform: 0,
+        load: 0
       }
-    };
+    }
+  };
 
-    const linhas = texto.split('\n').map(l => l.trim()).filter(Boolean);
-    let etapaAtual: keyof Pick<ArquiteturaComCusto, 'extract' | 'transform' | 'load'> | null = null;
-    let servicoTemp: string | null = null;
-    let custoSection = false;
+  const linhas = texto.split('\n').map(l => l.trim()).filter(Boolean);
 
-    for (let i = 0; i < linhas.length; i++) {
-      const linha = linhas[i];
+  let etapaAtual: 'extract' | 'transform' | 'load' | null = null;
+  let servicoTemp: string | null = null;
+  let inCustoSection = false;
+  let etapaCustoAtual: 'extract' | 'transform' | 'load' | null = null;
 
-      if (linha.startsWith('**EXTRACT**')) {
-        etapaAtual = 'extract';
-        custoSection = false;
+  for (let linha of linhas) {
+    // Detectar blocos de etapa
+    if (linha.startsWith('**EXTRACT**')) {
+      etapaAtual = 'extract';
+      inCustoSection = false;
+      continue;
+    }
+    if (linha.startsWith('**TRANSFORM**')) {
+      etapaAtual = 'transform';
+      inCustoSection = false;
+      continue;
+    }
+    if (linha.startsWith('**LOAD**')) {
+      etapaAtual = 'load';
+      inCustoSection = false;
+      continue;
+    }
+    if (linha.startsWith('**Estimativa de Custo**')) {
+      etapaAtual = null;
+      inCustoSection = true;
+      continue;
+    }
+
+    // Detectar início da seção de custo por etapa
+    if (inCustoSection && linha.startsWith('*EXTRACT*')) {
+      etapaCustoAtual = 'extract';
+      continue;
+    }
+    if (inCustoSection && linha.startsWith('*TRANSFORM*')) {
+      etapaCustoAtual = 'transform';
+      continue;
+    }
+    if (inCustoSection && linha.startsWith('*LOAD*')) {
+      etapaCustoAtual = 'load';
+      continue;
+    }
+
+    // Captura serviços e justificativas
+    if (etapaAtual) {
+      if (linha.startsWith('-Serviço:') || linha.startsWith('- Serviço:')) {
+        servicoTemp = linha.replace(/- ?Serviço:/, '').trim();
         continue;
       }
-      if (linha.startsWith('**TRANSFORM**')) {
-        etapaAtual = 'transform';
-        custoSection = false;
-        continue;
-      }
-      if (linha.startsWith('**LOAD**')) {
-        etapaAtual = 'load';
-        custoSection = false;
-        continue;
-      }
-      if (linha.startsWith('**Estimativa de Custo**')) {
-        etapaAtual = null;
-        custoSection = true;
-        continue;
-      }
-
-      if (etapaAtual) {
-        if (linha.startsWith('-Serviço:') || linha.startsWith('- Serviço:')) {
-          servicoTemp = linha.replace(/- ?Serviço:/, '').trim();
-        } else if (
-          (linha.startsWith('-Justificativa:') || linha.startsWith('- Justificativa:')) &&
-          servicoTemp
-        ) {
-          const justificativa = linha.replace(/- ?Justificativa:/, '').trim();
-          resultado[etapaAtual].push({ servico: servicoTemp, justificativa });
-          servicoTemp = null;
-        }
-      }
-
-      if (custoSection && /^\d+\.\s\*\*/.test(linha)) {
-        // Ex: 1. **AWS Glue**: descrição...
-        const servicoMatch = linha.match(/\*\*(.+?)\*\*/);
-        const servico = servicoMatch ? servicoMatch[1].trim() : '';
-        const resto = linha.split('**')[2]?.split(':')[1]?.trim() ?? '';
-        const valorMatch = resto.match(/R\$ ?([\d.,]+)/);
-        // const valor = valorMatch ? parseFloat(valorMatch[1].replace(',', '.')) : 0;
-
-        resultado.custoEstimado.detalhado.push({
-          servico,
-          descricao: resto
-        });
-      }
-
-      if (linha.startsWith('-Custo total:')) {
-        const totalMatch = linha.match(/R\$ ?([\d.,]+)/);
-        if(totalMatch)
-          resultado.custoEstimado.total = totalMatch[1] || '0'
-      }
-
       if (
-        linha.startsWith('Esses custos são estimativas') ||
-        linha.toLowerCase().includes('custos são estimativas')
+        (linha.startsWith('-Justificativa:') || linha.startsWith('- Justificativa:')) &&
+        servicoTemp
       ) {
-        resultado.custoEstimado.observacao = linha;
+        const justificativa = linha.replace(/- ?Justificativa:/, '').trim();
+        resultado[etapaAtual].push({ servico: servicoTemp, justificativa });
+        servicoTemp = null;
+        continue;
       }
     }
 
-    return resultado;
+    // Captura descrição do custo detalhado
+    if (inCustoSection && /^\d+\.\s\*\*/.test(linha)) {
+      const servicoMatch = linha.match(/\*\*(.+?)\*\*/);
+      const servico = servicoMatch ? servicoMatch[1].trim() : '';
+      const descricao = linha.split('**')[2]?.split(':')[1]?.trim() ?? '';
+      resultado.custoEstimado.detalhado.push({ servico, descricao });
+      continue;
+    }
+
+    // Captura custo individual por etapa (ex: Custo -> $69.12)
+    if (inCustoSection && etapaCustoAtual && linha.includes('Custo ->')) {
+      const valorMatch = linha.match(/Custo\s*->\s*\$?([\d.,]+)/);
+      if (valorMatch) {
+        const valor = parseFloat(valorMatch[1].replace(',', '.'));
+        resultado.custoEstimado.porEtapa[etapaCustoAtual] = valor;
+      }
+      continue;
+    }
+
+    // Captura custo total
+    if (linha.startsWith('-Custo total:')) {
+      const totalMatch = linha.match(/R\$ ?([\d.,]+)/);
+      if (totalMatch) {
+        resultado.custoEstimado.total = totalMatch[1];
+      }
+      continue;
+    }
+
+    // Captura observação final
+    if (
+      linha.startsWith('Esses custos são estimativas') ||
+      linha.toLowerCase().includes('custos são estimativas')
+    ) {
+      resultado.custoEstimado.observacao = linha;
+    }
   }
+
+  return resultado;
+}
 }

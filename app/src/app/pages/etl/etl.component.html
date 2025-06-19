@@ -21,7 +21,29 @@
 
             <div formGroupName="extract">
 
-              <p class="radio-group-space">1. Quantidade de dados por job: *</p>
+              <p>1. De onde os dados são obtidos? *</p>
+              <mat-radio-group formControlName="origin" class="radio-group-responsive" aria-label="Select an option" required>
+                <mat-radio-button value="API externa">API externa (ex: dados públicos, parceiros)</mat-radio-button>
+                <mat-radio-button value="Arquivos">Arquivos (CSV, Excel, JSON)</mat-radio-button>
+                <mat-radio-button value="Banco de dados">Banco de dados (MySQL, PostgreSQL, etc.)</mat-radio-button>
+                <mat-radio-button value="Dados em tempo real">Dados em tempo real (sensores, dispositivos IoT, logs)</mat-radio-button>
+              </mat-radio-group>
+
+              <p class="radio-group-space">2. Com que frequência os dados são recebidos? *</p>
+              <mat-radio-group formControlName="frequency" class="radio-group-responsive" aria-label="Select an option" required>
+                <mat-radio-button value="Uma única vez">Uma única vez</mat-radio-button>
+                <mat-radio-button value="Diariamente">Diariamente</mat-radio-button>
+                <mat-radio-button value="De hora em hora">De hora em hora</mat-radio-button>
+                <mat-radio-button value="Em tempo real">Em tempo real</mat-radio-button>
+              </mat-radio-group>
+
+              <p class="radio-group-space">3. Qual o tipo de processamento? *</p>
+              <mat-radio-group formControlName="processingType" class="radio-group-responsive" aria-label="Select an option" required>
+                <mat-radio-button value="Batch">Batch</mat-radio-button>
+                <mat-radio-button value="Streaming">Streaming</mat-radio-button>
+              </mat-radio-group>
+
+              <p class="radio-group-space">4. Quantidade de dados por job: *</p>
               <div style="display: flex; align-items: center;">
                 <mat-form-field appearance="outline" class="full-width">
                   <!-- <mat-label></mat-label> -->
@@ -44,28 +66,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <p>2. De onde os dados são obtidos? *</p>
-              <mat-radio-group formControlName="origin" class="radio-group-responsive" aria-label="Select an option" required>
-                <mat-radio-button value="API externa">API externa (ex: dados públicos, parceiros)</mat-radio-button>
-                <mat-radio-button value="Arquivos">Arquivos (CSV, Excel, JSON)</mat-radio-button>
-                <mat-radio-button value="Banco de dados">Banco de dados (MySQL, PostgreSQL, etc.)</mat-radio-button>
-                <mat-radio-button value="Dados em tempo real">Dados em tempo real (sensores, dispositivos IoT, logs)</mat-radio-button>
-              </mat-radio-group>
-
-              <p class="radio-group-space">3. Com que frequência os dados são recebidos? *</p>
-              <mat-radio-group formControlName="frequency" class="radio-group-responsive" aria-label="Select an option" required>
-                <mat-radio-button value="Uma única vez">Uma única vez</mat-radio-button>
-                <mat-radio-button value="Diariamente">Diariamente</mat-radio-button>
-                <mat-radio-button value="De hora em hora">De hora em hora</mat-radio-button>
-                <mat-radio-button value="Em tempo real">Em tempo real</mat-radio-button>
-              </mat-radio-group>
-
-              <p class="radio-group-space">4. Qual o tipo de processamento? *</p>
-              <mat-radio-group formControlName="processingType" class="radio-group-responsive" aria-label="Select an option" required>
-                <mat-radio-button value="Batch">Batch</mat-radio-button>
-                <mat-radio-button value="Streaming">Streaming</mat-radio-button>
-              </mat-radio-group>
 
               <!-- <mat-radio-group formControlName="size" class="radio-group-responsive" aria-label="Select an option" required>
                 <mat-radio-button value="Menor que 100 MB">Menor que 100 MB</mat-radio-button>
@@ -110,8 +110,34 @@
 
             <div formGroupName="transform">
 
-              <p>1. Qual o volume médio de dados processado por job? *</p>
+              <p>1. Quão complexa é a transformação dos dados? *</p>
+              <mat-radio-group formControlName="complexity" aria-label="Select an option">
+                <mat-radio-button value="Simples">Baixa (limpeza simples)</mat-radio-button>
+                <mat-radio-button value="Média">Média (joins, agregações)</mat-radio-button>
+                <mat-radio-button value="Alta">Alta (machine learning)</mat-radio-button>
+              </mat-radio-group>
 
+              <p class="radio-group-space">2. Com que frequência os dados são transformados? *</p>
+              <mat-radio-group formControlName="frequency" aria-label="Select an option">
+                <mat-radio-button value="Sob demanda">Sob demanda</mat-radio-button>
+                <mat-radio-button value="Agendado" class="spaced">Agendado</mat-radio-button>
+                <mat-radio-button value="Em tempo real" class="spaced">Em tempo real</mat-radio-button>
+              </mat-radio-group>
+
+              <p class="radio-group-space">3. Tempo médio da transformação: *</p>
+              <mat-radio-group formControlName="duration" aria-label="Select an option">
+                <mat-radio-button value="Menos de 5 minutos">Menos de 5 minutos.</mat-radio-button>
+                <mat-radio-button value="Entre 5 e 30 minutos" class="spaced">Entre 5 e 30 minutos.</mat-radio-button>
+                <mat-radio-button value="Mais de 30 minutos" class="spaced">Mais de 30 minutos.</mat-radio-button>
+              </mat-radio-group>
+
+              <p class="radio-group-space">4. Qual o tipo de processamento? *</p>
+              <mat-radio-group formControlName="processingType" class="radio-group-responsive" aria-label="Select an option" required>
+                <mat-radio-button value="Batch">Batch</mat-radio-button>
+                <mat-radio-button value="Streaming">Streaming</mat-radio-button>
+              </mat-radio-group>
+
+              <p>5. Qual o volume médio de dados processado por job? *</p>
               <div style="display: flex; align-items: center;">
                 <mat-form-field appearance="outline" class="full-width">
                   <input matInput type="number" formControlName="size" min="0" placeholder="Ex: 1.5">
@@ -132,33 +158,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <p>2. Quão complexa é a transformação dos dados? *</p>
-              <mat-radio-group formControlName="complexity" aria-label="Select an option">
-                <mat-radio-button value="Simples">Baixa (limpeza simples)</mat-radio-button>
-                <mat-radio-button value="Média">Média (joins, agregações)</mat-radio-button>
-                <mat-radio-button value="Alta">Alta (machine learning)</mat-radio-button>
-              </mat-radio-group>
-
-              <p class="radio-group-space">3. Com que frequência os dados são transformados? *</p>
-              <mat-radio-group formControlName="frequency" aria-label="Select an option">
-                <mat-radio-button value="Sob demanda">Sob demanda</mat-radio-button>
-                <mat-radio-button value="Agendado" class="spaced">Agendado</mat-radio-button>
-                <mat-radio-button value="Em tempo real" class="spaced">Em tempo real</mat-radio-button>
-              </mat-radio-group>
-
-              <p class="radio-group-space">4. Tempo médio da transformação: *</p>
-              <mat-radio-group formControlName="duration" aria-label="Select an option">
-                <mat-radio-button value="Menos de 5 minutos">Menos de 5 minutos.</mat-radio-button>
-                <mat-radio-button value="Entre 5 e 30 minutos" class="spaced">Entre 5 e 30 minutos.</mat-radio-button>
-                <mat-radio-button value="Mais de 30 minutos" class="spaced">Mais de 30 minutos.</mat-radio-button>
-              </mat-radio-group>
-
-              <p class="radio-group-space">5. Qual o tipo de processamento? *</p>
-              <mat-radio-group formControlName="processingType" class="radio-group-responsive" aria-label="Select an option" required>
-                <mat-radio-button value="Batch">Batch</mat-radio-button>
-                <mat-radio-button value="Streaming">Streaming</mat-radio-button>
-              </mat-radio-group>
 
               <p class="radio-group-space">6. Quais serviços você considera para transformação? (Não obrigatório)</p>
               <div formArrayName="services">
@@ -199,6 +198,7 @@
               <mat-radio-button value="Arquivos (ex: S3)">Arquivos (ex: S3)</mat-radio-button>
               <mat-radio-button value="Banco de dados relacional">Banco de dados relacional</mat-radio-button>
               <mat-radio-button value="Data warehouse para BI">Data warehouse para BI</mat-radio-button>
+              <mat-radio-button value="NoSQL">Banco NoSQL (ex: DynamoDB)</mat-radio-button>
             </mat-radio-group>
 
             <p class="radio-group-space">2. Você precisará consultar com SQL?</p>
@@ -207,13 +207,37 @@
               <mat-radio-button value="Não">Não</mat-radio-button>
             </mat-radio-group>
 
-            <p class="radio-group-space">3. Deseja visualizar dados em dashboards?</p>
-            <mat-radio-group formControlName="needVisualization" aria-label="Select an option">
-              <mat-radio-button value="Sim">Sim</mat-radio-button>
-              <mat-radio-button value="Não">Não</mat-radio-button>
+            <p class="radio-group-space">3. Com que frequência os dados são carregados?</p>
+            <mat-radio-group formControlName="frequency">
+              <mat-radio-button value="Sob demanda">Sob demanda</mat-radio-button>
+              <mat-radio-button value="Diariamente">Diariamente</mat-radio-button>
+              <mat-radio-button value="De hora em hora">De hora em hora</mat-radio-button>
+              <mat-radio-button value="Contínuo">Contínuo</mat-radio-button>
             </mat-radio-group>
 
-            <p class="radio-group-space">4. Quais serviços você deseja usar para armazenamento? (Não obrigatório)</p>
+            <p class="radio-group-space">4. Qual o volume estimado de dados carregados por mês?</p>
+              <div style="display: flex; align-items: center;">
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput type="number" formControlName="size" min="0" placeholder="Ex: 1.5">
+                  <mat-error *ngIf="etlForm.get('load.size')?.hasError('required')">
+                    Este campo é obrigatório
+                  </mat-error>
+                  <mat-error *ngIf="etlForm.get('load.size')?.hasError('min')">
+                    O valor deve ser maior ou igual a 0
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-left: 0.2rem;">
+                  <!-- <mat-label>Choose an option</mat-label> -->
+                  <mat-select [(value)]="loadSizeSelected">
+                    <mat-option value="mb">MB</mat-option>
+                    <mat-option value="gb">GB</mat-option>
+                    <mat-option value="tb">TB</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+            <p class="radio-group-space">5. Quais serviços você deseja usar para armazenamento? (Não obrigatório)</p>
             <div formArrayName="services">
               <mat-checkbox *ngFor="let service of loadServices; let i = index" [formControlName]="i">
                 {{ service }}
