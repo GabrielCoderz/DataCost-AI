@@ -16,6 +16,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgFor } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormsModule, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { EtlService } from './etl.service';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { EchartsConfigModule } from '../../module/echarts-config.module';
 
 interface ServiceItem {
   service: string;
@@ -88,7 +90,8 @@ const ELEMENT_DATA: any[] = [
     MatIconModule,
     MatRadioModule,
     MatCardModule,
-    NgFor
+    NgFor,
+    EchartsConfigModule
   ],
   templateUrl: './etl.component.html',
   styleUrl: './etl.component.scss'
@@ -120,6 +123,8 @@ export class EtlComponent {
 
   displayedColumns: string[] = ['servico', 'descricao'];
   public dataSource = ELEMENT_DATA;
+
+  chartOptions: any = {}
 
   constructor(private fb: FormBuilder, private etlService: EtlService) {
     this.etlForm = this.fb.group({
@@ -360,9 +365,41 @@ export class EtlComponent {
 
         console.log(this.results)
 
+        console.log(this.results.custoEstimado.porEtapa.extract)
         // this.dataSource = this.results
 
-        console.log(this.formatarRespostaGPTComCusto(this.results))
+        // console.log(this.formatarRespostaGPTComCusto(this.results))
+
+
+        this.chartOptions = {
+          title: {
+            text: 'Custos por Etapa (em US$)',
+            left: 'center'
+          },
+          tooltip: { trigger: 'axis' },
+          xAxis: {
+            type: 'category',
+            data: ['Extract', 'Transform', 'Load']
+          },
+          yAxis: {
+            type: 'value',
+            name: 'Custo (US$)'
+          },
+          series: [
+            {
+              type: 'bar',
+              data: [
+                this.results?.custoEstimado?.porEtapa?.extract || 0,
+                this.results?.custoEstimado?.porEtapa?.transform || 0,
+                this.results?.custoEstimado?.porEtapa?.load || 0
+              ],
+              label: {
+                show: true,
+                position: 'top'
+              }
+            }
+          ]
+        };
 
         this.isLoading = false
 

@@ -251,7 +251,7 @@
                 mat-raised-button
                 color="primary"
                 type="submit"
-
+                [disabled]="isLoading"
               >
                 <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
                 <div *ngIf="!isLoading">
@@ -327,7 +327,12 @@
           </div>
         </mat-card>
       </mat-tab>
+
       <mat-tab label="Estimativa de custos">
+        <div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart-container"></div>
+      </mat-tab>
+
+      <mat-tab label="Detalhes">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
           <!-- Position Column -->
           <ng-container matColumnDef="servico">
@@ -347,9 +352,9 @@
       </mat-tab>
     </mat-tab-group>
 
-
-
   </ng-container>
+
+
 </div>
 
 
