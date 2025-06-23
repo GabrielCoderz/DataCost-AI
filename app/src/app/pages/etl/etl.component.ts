@@ -18,6 +18,7 @@ import { ReactiveFormsModule, FormBuilder, FormsModule, Validators, FormGroup, F
 import { EtlService } from './etl.service';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { EchartsConfigModule } from '../../module/echarts-config.module';
+import { ToastrService } from 'ngx-toastr';
 
 interface ServiceItem {
   service: string;
@@ -48,6 +49,11 @@ interface ArquiteturaComCusto {
       load: number;
     };
   };
+  indicadores: {
+      escalabilidade: number;
+      facilidade: number;
+      custoBeneficio: number;
+    }
 }
 
 interface ArquiteturaSeparada {
@@ -98,7 +104,7 @@ const ELEMENT_DATA: any[] = [
 })
 export class EtlComponent {
   etlForm: FormGroup;
-  isLinear = false;
+  isLinear = true;
   results: any;
 
   arquitetura = {
@@ -125,8 +131,9 @@ export class EtlComponent {
   public dataSource = ELEMENT_DATA;
 
   chartOptions: any = {}
+  chartIndicadores: any = {}
 
-  constructor(private fb: FormBuilder, private etlService: EtlService) {
+  constructor(private fb: FormBuilder, private etlService: EtlService, private toastr: ToastrService) {
     this.etlForm = this.fb.group({
       extract: this.fb.group({
         origin: ['', Validators.required],
@@ -182,17 +189,8 @@ export class EtlComponent {
   }
 
   onSubmit() {
-    console.log(this.etlForm.value);
+    this.toastr.info('Gerando arquitetura...')
     this.isLoading = true
-    // this.etlService.getRecommendations(this.etlForm.value).subscribe({
-    //   next: (result: any) => {
-    //     this.results = result;
-    //     console.log('Recomendações:', this.results);
-    //   },
-    //   error: (err: any) => {
-    //     console.error('Erro ao buscar recomendações:', err);
-    //   }
-    // });
 
     this.extractServices = this.getSelectedExtractServices()
     this.transformServices = this.getSelectedTransformServices()
@@ -267,6 +265,7 @@ export class EtlComponent {
             - Se for, indique o tipo da instância mais adequada, o motivo técnico, e o custo por hora e mensal.
             - Evite sugerir instâncias exageradas como c5.4xlarge sem justificativa forte.
             - Se o volume de dados for inferior a 500 MB por job e a frequência de ingestão for até uma vez por hora, recomende AWS Lambda + Amazon S3. Acima disso, considere Amazon EC2 ou Kinesis Data Streams como alternativas mais robustas.
+            - Use SEMPRE 2 casas DECIMAIS no MÁXIMO ao colocar qualquer valor
 
             Quando for colocar o titulo EXTRACT, deixe o título assim **EXTRACT**.
             Quando for colocar o titulo TRANSFORM, deixe apenas o título **TRANSFORM**.
@@ -314,7 +313,19 @@ export class EtlComponent {
 
             NUNCA COLOQUE DOIS PONTOS ":". EXEMPLO -> "Custo:" ou "Total:"
 
+            **Indicador de escalabilidade ou eficiência**
+
+            - Escalabilidade <Dê uma nota de 0 a 10 para a ESCALABILIDADE da ARQUITETURA gerada>
+            - Facilidade <Dê uma nota de 0 a 10 para a FACILIDADE da ARQUITETURA gerada>
+            - Custo-benefício <Dê uma nota de 0 a 10 para o Custo-benefício da ARQUITETURA gerada>
+
+            **Justificativa Geral**
+
+            - Justificativa Geral: <Faça uma justificativa completa e detalhada, com base nos dados fornecidos, do por que essa arquitetura foi recomendada>
+
             **Estimativa de Custo**
+
+            IMPORTANTE: Usar sempre duas casas decimais no MÁXIMO. Usar sempre como está no formato abaixo:
 
             *EXTRACT*
             1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>.
@@ -345,31 +356,13 @@ export class EtlComponent {
         console.log('Recomendações:', result);
         this.results = this.formatarRespostaGPTComCusto(result);
 
-  //       const ELEMENT_DATA: any[] = [
-  //   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  //   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  //   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  //   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  //   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  //   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  //   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  //   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  //   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  //   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  // ];
-
         this.dataSource = this.results.custoEstimado.detalhado.map((e: any) => ({
           servico: e.servico,
           descricao: e.descricao
         }))
 
         console.log(this.results)
-
-        console.log(this.results.custoEstimado.porEtapa.extract)
-        // this.dataSource = this.results
-
-        // console.log(this.formatarRespostaGPTComCusto(this.results))
-
+        console.log('veio aq')
 
         this.chartOptions = {
           title: {
@@ -389,9 +382,9 @@ export class EtlComponent {
             {
               type: 'bar',
               data: [
-                this.results?.custoEstimado?.porEtapa?.extract || 0,
-                this.results?.custoEstimado?.porEtapa?.transform || 0,
-                this.results?.custoEstimado?.porEtapa?.load || 0
+                this.results.custoEstimado.porEtapa.extract,
+                this.results.custoEstimado.porEtapa.transform,
+                this.results.custoEstimado.porEtapa.load
               ],
               label: {
                 show: true,
@@ -401,9 +394,43 @@ export class EtlComponent {
           ]
         };
 
+        this.chartIndicadores = {
+          title: {
+            text: 'Indicadores de Arquitetura',
+            left: 'center'
+          },
+          tooltip: {},
+          radar: {
+            indicator: [
+              { name: 'Escalabilidade', max: 10 },
+              { name: 'Facilidade', max: 10 },
+              { name: 'Custo-benefício', max: 10 }
+            ]
+          },
+          series: [
+            {
+              name: 'Indicadores',
+              type: 'radar',
+              data: [
+                {
+                  value: [
+                    this.results?.indicadores?.escalabilidade ?? 0,
+                    this.results?.indicadores?.facilidade ?? 0,
+                    this.results?.indicadores?.custoBeneficio ?? 0
+                  ],
+                  name: 'Arquitetura Avaliada'
+                }
+              ],
+              areaStyle: {}
+            }
+          ]
+        };
+
+        console.log(this.chartOptions)
+
         this.isLoading = false
 
-        // console.log(this.arquitetura)
+        this.toastr.success('Arquitetura gerada com sucesso.')
       },
       error: (err: any) => {
         console.error('Erro ao buscar recomendações:', err);
@@ -559,18 +586,23 @@ export class EtlComponent {
         transform: 0,
         load: 0
       }
+    },
+    indicadores: {
+      escalabilidade: 0,
+      facilidade: 0,
+      custoBeneficio: 0
     }
   };
 
   const linhas = texto.split('\n').map(l => l.trim()).filter(Boolean);
 
   let etapaAtual: 'extract' | 'transform' | 'load' | null = null;
-  let servicoTemp: string | null = null;
-  let inCustoSection = false;
   let etapaCustoAtual: 'extract' | 'transform' | 'load' | null = null;
+  let inCustoSection = false;
+  let servicoTemp: string | null = null;
 
   for (let linha of linhas) {
-    // Detectar blocos de etapa
+    // Detecta título de etapa
     if (linha.startsWith('**EXTRACT**')) {
       etapaAtual = 'extract';
       inCustoSection = false;
@@ -592,7 +624,7 @@ export class EtlComponent {
       continue;
     }
 
-    // Detectar início da seção de custo por etapa
+    // Detecta etapa de custo
     if (inCustoSection && linha.startsWith('*EXTRACT*')) {
       etapaCustoAtual = 'extract';
       continue;
@@ -606,24 +638,21 @@ export class EtlComponent {
       continue;
     }
 
-    // Captura serviços e justificativas
-    if (etapaAtual) {
-      if (linha.startsWith('-Serviço:') || linha.startsWith('- Serviço:')) {
-        servicoTemp = linha.replace(/- ?Serviço:/, '').trim();
-        continue;
-      }
-      if (
-        (linha.startsWith('-Justificativa:') || linha.startsWith('- Justificativa:')) &&
-        servicoTemp
-      ) {
-        const justificativa = linha.replace(/- ?Justificativa:/, '').trim();
-        resultado[etapaAtual].push({ servico: servicoTemp, justificativa });
-        servicoTemp = null;
-        continue;
-      }
+    // Captura serviço
+    if (etapaAtual && (linha.startsWith('-Serviço:') || linha.startsWith('- Serviço:'))) {
+      servicoTemp = linha.replace(/- ?Serviço:/, '').trim();
+      continue;
     }
 
-    // Captura descrição do custo detalhado
+    // Captura justificativa
+    if (etapaAtual && servicoTemp && (linha.startsWith('-Justificativa:') || linha.startsWith('- Justificativa:'))) {
+      const justificativa = linha.replace(/- ?Justificativa:/, '').trim();
+      resultado[etapaAtual].push({ servico: servicoTemp, justificativa });
+      servicoTemp = null;
+      continue;
+    }
+
+    // Captura custo detalhado
     if (inCustoSection && /^\d+\.\s\*\*/.test(linha)) {
       const servicoMatch = linha.match(/\*\*(.+?)\*\*/);
       const servico = servicoMatch ? servicoMatch[1].trim() : '';
@@ -632,17 +661,17 @@ export class EtlComponent {
       continue;
     }
 
-    // Captura custo individual por etapa (ex: Custo -> $69.12)
+    // Captura valor individual por etapa
     if (inCustoSection && etapaCustoAtual && linha.includes('Custo ->')) {
       const valorMatch = linha.match(/Custo\s*->\s*\$?([\d.,]+)/);
       if (valorMatch) {
-        const valor = parseFloat(valorMatch[1].replace(',', '.'));
+        const valor = parseFloat(valorMatch[1].replace(/,/g, ''));
         resultado.custoEstimado.porEtapa[etapaCustoAtual] = valor;
       }
       continue;
     }
 
-    // Captura custo total
+    // Custo total final
     if (linha.startsWith('-Custo total:')) {
       const totalMatch = linha.match(/R\$ ?([\d.,]+)/);
       if (totalMatch) {
@@ -651,12 +680,27 @@ export class EtlComponent {
       continue;
     }
 
-    // Captura observação final
+    // Observação final
     if (
       linha.startsWith('Esses custos são estimativas') ||
       linha.toLowerCase().includes('custos são estimativas')
     ) {
       resultado.custoEstimado.observacao = linha;
+      continue;
+    }
+
+    // Indicadores de eficiência
+    if (linha.toLowerCase().includes('escalabilidade')) {
+      const match = linha.match(/escalabilidade\s+(\d+)/i);
+      if (match) resultado.indicadores!.escalabilidade = Number(match[1]);
+    }
+    if (linha.toLowerCase().includes('facilidade')) {
+      const match = linha.match(/facilidade\s+(\d+)/i);
+      if (match) resultado.indicadores!.facilidade = Number(match[1]);
+    }
+    if (linha.toLowerCase().includes('custo-benefício')) {
+      const match = linha.match(/custo-benefício\s+(\d+)/i);
+      if (match) resultado.indicadores!.custoBeneficio = Number(match[1]);
     }
   }
 

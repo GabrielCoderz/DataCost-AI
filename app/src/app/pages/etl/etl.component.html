@@ -275,7 +275,8 @@
           <div class="etl-content">
             <p><strong>Origem:</strong> {{ etlForm.value.extract.origin }}</p>
             <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
-            <p><strong>Tamanho:</strong> {{ etlForm.value.extract.size }}</p>
+            <p><strong>Tipo:</strong> {{ etlForm.value.extract.processingType }}</p>
+            <p><strong>Volume por job:</strong> {{ etlForm.value.extract.size }} {{ extractSizeSelected }}</p>
 
             <p class="section-label">Recomendação:</p>
             <ul>
@@ -294,7 +295,10 @@
           <h2 class="etl-title">🔄 Etapa de Transformação</h2>
           <div class="etl-content">
             <p><strong>Complexidade:</strong> {{ etlForm.value.transform.complexity }}</p>
-            <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
+            <p><strong>Frequência:</strong> {{ etlForm.value.transform.frequency }}</p>
+            <p><strong>Tempo:</strong> {{ etlForm.value.transform.duration }}</p>
+            <p><strong>Tipo:</strong> {{ etlForm.value.transform.processingType }}</p>
+            <p><strong>Volume por job:</strong> {{ etlForm.value.transform.size }} {{ transformSizeSelected }}</p>
 
             <p class="section-label">Recomendação:</p>
             <ul>
@@ -313,7 +317,9 @@
           <h2 class="etl-title">📦 Etapa de Carga</h2>
           <div class="etl-content">
             <p><strong>Destino:</strong> {{ etlForm.value.load.storeLocation }}</p>
-            <!-- <p><strong>Precisa de SQL?</strong> {{ etlForm.value.load.needSQL }}</p> -->
+            <p><strong>Precisa de SQL?</strong> {{ etlForm.value.load.needSQL }}</p>
+            <p><strong>Frequência:</strong> {{ etlForm.value.load.frequency }}</p>
+            <p><strong>Volume por mês:</strong> {{ etlForm.value.load.size }} {{ loadSizeSelected }}</p>
 
             <p class="section-label">Recomendação:</p>
             <ul>
@@ -330,6 +336,8 @@
 
       <mat-tab label="Estimativa de custos">
         <div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart-container"></div>
+
+        <div *ngIf="chartIndicadores" echarts [options]="chartIndicadores" class="chart-container"></div>
       </mat-tab>
 
       <mat-tab label="Detalhes">
