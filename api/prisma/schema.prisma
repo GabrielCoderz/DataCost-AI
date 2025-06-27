@@ -27,9 +27,9 @@ model Recommendation {
   id            String   @id @default(uuid())
   userId        String
   createdAt     DateTime @default(now())
-  extractData   Json
-  transformData Json
-  loadData      Json
+  extractData   String
+  transformData String
+  loadData      String
   response      String
 
   user User @relation(fields: [userId], references: [id])

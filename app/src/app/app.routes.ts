@@ -5,12 +5,18 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { authGuard } from './auth/auth.guard';
+import { ArquiteturasSalvasComponent } from './pages/arquiteturas-salvas/arquiteturas-salvas.component';
 
 
 export const routes: Routes = [
   {
     path: 'recomendador',
     component: EtlComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'arquiteturas-salvas',
+    component: ArquiteturasSalvasComponent,
     canActivate: [authGuard]
   },
   {

@@ -38,7 +38,7 @@ class OpenAIRecommendationService {
         max_tokens: 700,
       });
 
-      console.log(response.choices[0])
+      // console.log(response.choices[0])
 
       return response.choices[0].message.content;
     } catch (error) {

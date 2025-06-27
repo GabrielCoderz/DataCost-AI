@@ -133,6 +133,8 @@ export class EtlComponent {
   chartOptions: any = {}
   chartIndicadores: any = {}
 
+  alreadySaved = false
+
   constructor(private fb: FormBuilder, private etlService: EtlService, private toastr: ToastrService) {
     this.etlForm = this.fb.group({
       extract: this.fb.group({
@@ -353,6 +355,7 @@ export class EtlComponent {
     }).subscribe({
       next: (result: string) => {
         // this.results = result;
+        this.alreadySaved = false
         console.log('Recomendações:', result);
         this.results = this.formatarRespostaGPTComCusto(result);
 
@@ -436,6 +439,51 @@ export class EtlComponent {
         console.error('Erro ao buscar recomendações:', err);
       }
     });
+  }
+
+  public saveResult() {
+    if(this.alreadySaved) {
+      this.toastr.error('Você já salvou esta arquitetura.')
+
+      return
+    }
+
+    const extractData = {
+      "origin": this.etlForm.value.extract.origin,
+      "frequency": this.etlForm.value.extract.frequency,
+      "processingType": this.etlForm.value.extract.processingType,
+      "size": this.etlForm.value.extract.size,
+      "extractSizeSelected": this.extractSizeSelected
+    }
+
+    const transformData = {
+      "complexity": this.etlForm.value.transform.complexity,
+      "frequency": this.etlForm.value.transform.frequency,
+      "duration": this.etlForm.value.transform.duration,
+      "processingType": this.etlForm.value.transform.processingType,
+      "size": this.etlForm.value.transform.size,
+      "transformSizeSelected": this.transformSizeSelected
+    }
+
+    const loadData = {
+      "storeLocation": this.etlForm.value.load.storeLocation,
+      "needSQL": this.etlForm.value.load.needSQL,
+      "frequency": this.etlForm.value.load.frequency,
+      "size": this.etlForm.value.load.size,
+      "loadSizeSelected": this.loadSizeSelected
+    }
+
+    this.etlService.saveRecommendations({
+      extractData: JSON.stringify(extractData),
+      transformData: JSON.stringify(transformData),
+      loadData: JSON.stringify(loadData),
+      responseAI: JSON.stringify(this.results)
+    }).subscribe({
+      next: (result: string) => {
+        this.alreadySaved = true
+        this.toastr.success('Arquitetura salva com sucesso.')
+      }
+    })
   }
 
   // public parseArquiteturaDetalhada(iaText: string): ArquiteturaSeparada {

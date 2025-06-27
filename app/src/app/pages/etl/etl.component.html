@@ -267,6 +267,9 @@
   </ng-container>
 
   <ng-container *ngIf="results">
+    <button mat-flat-button class="btn-salvar-resultado" color="accent" (click)="saveResult()">
+      <mat-icon>save</mat-icon> Salvar Resultado
+    </button>
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
       <mat-tab label="Arquitetura">
         <!-- Etapa de Extração -->
@@ -359,10 +362,7 @@
         </table>
       </mat-tab>
     </mat-tab-group>
-
   </ng-container>
-
-
 </div>
 
 

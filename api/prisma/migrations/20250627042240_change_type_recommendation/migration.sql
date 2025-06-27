@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "recommendations" ALTER COLUMN "extractData" SET DATA TYPE TEXT,
+ALTER COLUMN "transformData" SET DATA TYPE TEXT,
+ALTER COLUMN "loadData" SET DATA TYPE TEXT;
