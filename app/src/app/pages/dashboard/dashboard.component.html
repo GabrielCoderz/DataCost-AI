@@ -29,14 +29,14 @@
         <button mat-raised-button color="accent" routerLink="/recomendador">
           <mat-icon>cloud_queue</mat-icon> Recomendador
         </button>
+        <button mat-raised-button color="accent" (click)="openEc2CalculatorModal()">
+          Calcular Custo EC2
+        </button>
         <button mat-raised-button color="accent" routerLink="/arquiteturas-salvas">
           <mat-icon>storage</mat-icon> Arquiteturas salvas
         </button>
-        <button mat-raised-button color="accent" (click)="openEc2CalculatorModal()">
-          <mat-icon>storage</mat-icon> Calcular Custo EC2
-        </button>
         <button mat-raised-button color="basic" disabled>
-          <mat-icon>data_usage</mat-icon> Calcular Custo Glue (Em Breve)
+          Calcular Custo Glue (Em Breve)
         </button>
       </div>
       <p class="disclaimer-text">

@@ -1,0 +1,100 @@
+<ng-container *ngIf="architectureResults">
+    <button *ngIf="!isDetails" matTooltip="Salvar arquitetura" matTooltipPosition="left" mat-flat-button class="btn-salvar-resultado" color="accent" (click)="saveArch()">
+      <mat-icon style="margin-right: 0px !important;">save</mat-icon>
+    </button>
+    <button *ngIf="!isDetails" matTooltip="Refazer recomendação" matTooltipPosition="left" mat-flat-button class="btn-reload-resultado" color="primary" (click)="reload()">
+      <mat-icon style="margin-right: 0px !important;">autorenew</mat-icon>
+    </button>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+      <mat-tab label="Arquitetura">
+        <!-- Etapa de Extração -->
+        <mat-card class="etl-card extract">
+          <h2 class="etl-title">🛠️ Etapa de Extração</h2>
+          <div class="etl-content">
+            <p><strong>Origem:</strong> {{ architectureResults.extractData.origin }}</p>
+            <p><strong>Frequência:</strong> {{ architectureResults.extractData.frequency }}</p>
+            <p><strong>Tipo:</strong> {{ architectureResults.extractData.processingType }}</p>
+            <p><strong>Volume por job:</strong> {{ architectureResults.extractData.size }} {{ architectureResults.extractData.extractSizeSelected }}</p>
+
+            <p class="section-label">Recomendação:</p>
+            <ul>
+              <li *ngFor="let item of architectureResults.extract">{{ item.servico }}</li>
+            </ul>
+
+            <p class="section-label">Justificativa:</p>
+            <ul>
+              <li *ngFor="let item of architectureResults.extract">{{ item.justificativa }}</li>
+            </ul>
+          </div>
+        </mat-card>
+
+        <!-- Etapa de Transformação -->
+        <mat-card class="etl-card transform">
+          <h2 class="etl-title">🔄 Etapa de Transformação</h2>
+          <div class="etl-content">
+            <p><strong>Complexidade:</strong> {{ architectureResults.transformData.complexity }}</p>
+            <p><strong>Frequência:</strong> {{ architectureResults.transformData.frequency }}</p>
+            <p><strong>Tempo:</strong> {{ architectureResults.transformData.duration }}</p>
+            <p><strong>Tipo:</strong> {{ architectureResults.transformData.processingType }}</p>
+            <p><strong>Volume por job:</strong> {{ architectureResults.transformData.size }} {{ architectureResults.transformData.transformSizeSelected }}</p>
+
+            <p class="section-label">Recomendação:</p>
+            <ul>
+              <li *ngFor="let item of architectureResults.transform">{{ item.servico }}</li>
+            </ul>
+
+            <p class="section-label">Justificativa:</p>
+            <ul>
+              <li *ngFor="let item of architectureResults.transform">{{ item.justificativa }}</li>
+            </ul>
+          </div>
+        </mat-card>
+
+        <!-- Etapa de Carga -->
+        <mat-card class="etl-card load">
+          <h2 class="etl-title">📦 Etapa de Carga</h2>
+          <div class="etl-content">
+            <p><strong>Destino:</strong> {{ architectureResults.loadData.storeLocation }}</p>
+            <p><strong>Precisa de SQL?</strong> {{ architectureResults.loadData.needSQL }}</p>
+            <p><strong>Frequência:</strong> {{ architectureResults.loadData.frequency }}</p>
+            <p><strong>Volume por mês:</strong> {{ architectureResults.loadData.size }} {{ architectureResults.loadData.loadSizeSelected }}</p>
+
+            <p class="section-label">Recomendação:</p>
+            <ul>
+              <li *ngFor="let item of architectureResults.load">{{ item.servico }}</li>
+            </ul>
+
+            <p class="section-label">Justificativa:</p>
+            <ul>
+              <li *ngFor="let item of architectureResults.load">{{ item.justificativa }}</li>
+            </ul>
+          </div>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab label="Estimativa de custos">
+        <div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart-container"></div>
+
+        <div *ngIf="chartIndicadores" echarts [options]="chartIndicadores" class="chart-container"></div>
+      </mat-tab>
+
+      <mat-tab label="Detalhes">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Position Column -->
+          <ng-container matColumnDef="servico">
+            <th mat-header-cell *matHeaderCellDef> Serviço </th>
+            <td mat-cell *matCellDef="let element"> {{element.servico}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="descricao">
+            <th mat-header-cell *matHeaderCellDef> Descrição </th>
+            <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>

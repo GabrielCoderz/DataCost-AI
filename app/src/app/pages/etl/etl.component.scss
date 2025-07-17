@@ -1,6 +1,4 @@
 .container {
-  margin: 1% 5%;
-
   .dashboard-info-card {
     // max-width: 700px;
     width: 100%;
@@ -140,4 +138,8 @@
     transform: scale(1.05);
     cursor: pointer;
   }
+}
+
+.form-container {
+  margin: 1% 5%;
 }

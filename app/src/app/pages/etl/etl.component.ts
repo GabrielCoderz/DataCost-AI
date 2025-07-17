@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,9 @@ import { EtlService } from './etl.service';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { EchartsConfigModule } from '../../module/echarts-config.module';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ArchitectureNameDialogComponent } from '../../components/architecture-name-modal/architecture-name-dialog.component';
+import { ArchitectureResultsDisplayComponent } from '../../components/architecture-results-display/architecture-results-display.component';
 
 interface ServiceItem {
   service: string;
@@ -97,7 +100,8 @@ const ELEMENT_DATA: any[] = [
     MatRadioModule,
     MatCardModule,
     NgFor,
-    EchartsConfigModule
+    EchartsConfigModule,
+    ArchitectureResultsDisplayComponent
   ],
   templateUrl: './etl.component.html',
   styleUrl: './etl.component.scss'
@@ -134,6 +138,8 @@ export class EtlComponent {
   chartIndicadores: any = {}
 
   alreadySaved = false
+
+  private dialog = inject(MatDialog);
 
   constructor(private fb: FormBuilder, private etlService: EtlService, private toastr: ToastrService) {
     this.etlForm = this.fb.group({
@@ -197,8 +203,6 @@ export class EtlComponent {
     this.extractServices = this.getSelectedExtractServices()
     this.transformServices = this.getSelectedTransformServices()
     this.loadServices = this.getSelectedLoadServices()
-
-    console.log(this.extractServices.join(','))
 
     const msg = `
             Você é um arquiteto de soluções da AWS.
@@ -331,19 +335,19 @@ export class EtlComponent {
 
             *EXTRACT*
             1. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>.
-            Custo -> <valor final do calculo SEMPRE>
+            Custo -> <valor final do calculo SEMPRE e SEMPRE NESTA POSIÇÃO, ABAIXO DO 1.>
 
             repita... se houver mais
 
             *TRANSFORM*
             2. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
-            Custo -> <valor final do calculo SEMPRE>
+            Custo -> <valor final do calculo SEMPRE e SEMPRE NESTA POSIÇÃO, ABAIXO DO 2.>
 
             repita... se houver mais
 
             *LOAD*
             3. **<nome do serviço da aws>**: <explicação DETALHADA da base de calculo>. <valor final do calculo SEMPRE e APENAS>
-            Custo -> <valor final do calculo SEMPRE>
+            Custo -> <valor final do calculo SEMPRE e SEMPRE NESTA POSIÇÃO, ABAIXO DO 3.>
 
             repita... se houver mais
       `
@@ -358,78 +362,49 @@ export class EtlComponent {
         this.alreadySaved = false
         console.log('Recomendações:', result);
         this.results = this.formatarRespostaGPTComCusto(result);
+        console.log(this.results)
 
         this.dataSource = this.results.custoEstimado.detalhado.map((e: any) => ({
           servico: e.servico,
           descricao: e.descricao
         }))
 
+        const extractData = {
+          "origin": this.etlForm.value.extract.origin,
+          "frequency": this.etlForm.value.extract.frequency,
+          "processingType": this.etlForm.value.extract.processingType,
+          "size": this.etlForm.value.extract.size,
+          "extractSizeSelected": this.extractSizeSelected
+        }
+
+        const transformData = {
+          "complexity": this.etlForm.value.transform.complexity,
+          "frequency": this.etlForm.value.transform.frequency,
+          "duration": this.etlForm.value.transform.duration,
+          "processingType": this.etlForm.value.transform.processingType,
+          "size": this.etlForm.value.transform.size,
+          "transformSizeSelected": this.transformSizeSelected
+        }
+
+        const loadData = {
+          "storeLocation": this.etlForm.value.load.storeLocation,
+          "needSQL": this.etlForm.value.load.needSQL,
+          "frequency": this.etlForm.value.load.frequency,
+          "size": this.etlForm.value.load.size,
+          "loadSizeSelected": this.loadSizeSelected
+        }
+
+        this.results = {
+          ...this.results,
+          extractData,
+          transformData,
+          loadData,
+        }
+
         console.log(this.results)
         console.log('veio aq')
 
-        this.chartOptions = {
-          title: {
-            text: 'Custos por Etapa (em US$)',
-            left: 'center'
-          },
-          tooltip: { trigger: 'axis' },
-          xAxis: {
-            type: 'category',
-            data: ['Extract', 'Transform', 'Load']
-          },
-          yAxis: {
-            type: 'value',
-            name: 'Custo (US$)'
-          },
-          series: [
-            {
-              type: 'bar',
-              data: [
-                this.results.custoEstimado.porEtapa.extract,
-                this.results.custoEstimado.porEtapa.transform,
-                this.results.custoEstimado.porEtapa.load
-              ],
-              label: {
-                show: true,
-                position: 'top'
-              }
-            }
-          ]
-        };
-
-        this.chartIndicadores = {
-          title: {
-            text: 'Indicadores de Arquitetura',
-            left: 'center'
-          },
-          tooltip: {},
-          radar: {
-            indicator: [
-              { name: 'Escalabilidade', max: 10 },
-              { name: 'Facilidade', max: 10 },
-              { name: 'Custo-benefício', max: 10 }
-            ]
-          },
-          series: [
-            {
-              name: 'Indicadores',
-              type: 'radar',
-              data: [
-                {
-                  value: [
-                    this.results?.indicadores?.escalabilidade ?? 0,
-                    this.results?.indicadores?.facilidade ?? 0,
-                    this.results?.indicadores?.custoBeneficio ?? 0
-                  ],
-                  name: 'Arquitetura Avaliada'
-                }
-              ],
-              areaStyle: {}
-            }
-          ]
-        };
-
-        console.log(this.chartOptions)
+        // console.log(this.chartOptions)
 
         this.isLoading = false
 
@@ -448,42 +423,56 @@ export class EtlComponent {
       return
     }
 
-    const extractData = {
-      "origin": this.etlForm.value.extract.origin,
-      "frequency": this.etlForm.value.extract.frequency,
-      "processingType": this.etlForm.value.extract.processingType,
-      "size": this.etlForm.value.extract.size,
-      "extractSizeSelected": this.extractSizeSelected
-    }
+    const dialogRef = this.dialog.open(ArchitectureNameDialogComponent, {
+      width: '400px',
+      data: { name: '' }
+    });
 
-    const transformData = {
-      "complexity": this.etlForm.value.transform.complexity,
-      "frequency": this.etlForm.value.transform.frequency,
-      "duration": this.etlForm.value.transform.duration,
-      "processingType": this.etlForm.value.transform.processingType,
-      "size": this.etlForm.value.transform.size,
-      "transformSizeSelected": this.transformSizeSelected
-    }
+    dialogRef.afterClosed().subscribe(architectureName => {
+      if (architectureName) {
+        console.log('Nome da arquitetura:', architectureName);
 
-    const loadData = {
-      "storeLocation": this.etlForm.value.load.storeLocation,
-      "needSQL": this.etlForm.value.load.needSQL,
-      "frequency": this.etlForm.value.load.frequency,
-      "size": this.etlForm.value.load.size,
-      "loadSizeSelected": this.loadSizeSelected
-    }
+        const extractData = {
+          "origin": this.etlForm.value.extract.origin,
+          "frequency": this.etlForm.value.extract.frequency,
+          "processingType": this.etlForm.value.extract.processingType,
+          "size": this.etlForm.value.extract.size,
+          "extractSizeSelected": this.extractSizeSelected
+        }
 
-    this.etlService.saveRecommendations({
-      extractData: JSON.stringify(extractData),
-      transformData: JSON.stringify(transformData),
-      loadData: JSON.stringify(loadData),
-      responseAI: JSON.stringify(this.results)
-    }).subscribe({
-      next: (result: string) => {
-        this.alreadySaved = true
-        this.toastr.success('Arquitetura salva com sucesso.')
+        const transformData = {
+          "complexity": this.etlForm.value.transform.complexity,
+          "frequency": this.etlForm.value.transform.frequency,
+          "duration": this.etlForm.value.transform.duration,
+          "processingType": this.etlForm.value.transform.processingType,
+          "size": this.etlForm.value.transform.size,
+          "transformSizeSelected": this.transformSizeSelected
+        }
+
+        const loadData = {
+          "storeLocation": this.etlForm.value.load.storeLocation,
+          "needSQL": this.etlForm.value.load.needSQL,
+          "frequency": this.etlForm.value.load.frequency,
+          "size": this.etlForm.value.load.size,
+          "loadSizeSelected": this.loadSizeSelected
+        }
+
+        this.etlService.saveRecommendations({
+          architectureName,
+          extractData: JSON.stringify(extractData),
+          transformData: JSON.stringify(transformData),
+          loadData: JSON.stringify(loadData),
+          responseAI: JSON.stringify(this.results)
+        }).subscribe({
+          next: (result: string) => {
+            this.alreadySaved = true
+            this.toastr.success('Arquitetura salva com sucesso.')
+          }
+        })
+      } else {
+        console.log('Salvamento cancelado.');
       }
-    })
+    });
   }
 
   // public parseArquiteturaDetalhada(iaText: string): ArquiteturaSeparada {

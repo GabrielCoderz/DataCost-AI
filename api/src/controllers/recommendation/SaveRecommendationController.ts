@@ -5,13 +5,14 @@ class SaveRecommendationController {
     
     async handle(request: Request, response: Response): Promise<any> {
         try {
-            const { extractData, transformData, loadData, responseAI } = request.body;
+            const { architectureName, extractData, transformData, loadData, responseAI } = request.body;
             const user_id = request.user_id;
       
             const saveRecommendationService = new SaveRecommendationService();
       
             const recommendation = await saveRecommendationService.execute({
               user_id,
+              architectureName,
               extractData,
               transformData,
               loadData,

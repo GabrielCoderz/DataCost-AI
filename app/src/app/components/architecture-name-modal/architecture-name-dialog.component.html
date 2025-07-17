@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Salvar Arquitetura</h2>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Nome da Arquitetura</mat-label>
+    <input matInput [(ngModel)]="data.name" cdkFocusInitial>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data.name">Salvar</button>
+</div>

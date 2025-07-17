@@ -25,6 +25,7 @@ interface RecommendationAIRequest {
 }
 
 interface SaveRecommendationRequest {
+  architectureName: string;
   extractData: string;
   transformData: string;
   loadData: string;

@@ -2,6 +2,7 @@ import prisma from '../../prisma';
 
 interface RecommendationRequest {
     user_id: string;
+    architectureName: string;
     extractData: string;
     transformData: string;
     loadData: string;
@@ -10,7 +11,7 @@ interface RecommendationRequest {
 
 class SaveRecommendationService {
 
-    async execute({ user_id, extractData, transformData, loadData, response }: RecommendationRequest) {
+    async execute({ user_id, architectureName, extractData, transformData, loadData, response }: RecommendationRequest) {
 
         if(!extractData || !transformData || !loadData || !response) {
             throw new Error("Verifique se existe dados faltantes.");
@@ -18,6 +19,7 @@ class SaveRecommendationService {
 
         const user = await prisma.recommendation.create({
             data: {
+                architectureName,
                 extractData,
                 transformData,
                 loadData,

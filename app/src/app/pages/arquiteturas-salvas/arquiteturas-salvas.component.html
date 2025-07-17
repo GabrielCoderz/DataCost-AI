@@ -1,30 +1,48 @@
-<div class="history-container">
-  <h1 class="history-title">Histórico de Arquiteturas Salvas</h1>
+<div class="history-container" *ngIf="!details">
+  <h1 class="history-title">Arquiteturas Salvas</h1>
 
-  <div *ngIf="savedArchitectures.length === 0" class="no-data-message">
-    <p>Você ainda não salvou nenhuma arquitetura.</p>
-    <p>Gere uma arquitetura na tela principal e utilize a opção de salvar!</p>
-  </div>
+  <div *ngIf="(savedArchitectures$ | async) as architectures; else loadingOrNoData">
+    <div *ngIf="architectures.length === 0" class="no-data-message">
+      <p>Você ainda não salvou nenhuma arquitetura.</p>
+      <p>Gere uma arquitetura na tela principal e utilize a opção de salvar!</p>
+    </div>
 
-  <div class="architecture-grid">
-    <div class="architecture-card mat-elevation-z2" *ngFor="let arch of savedArchitectures; let i = index">
-      <div class="card-header">
-        <h2 class="card-title">{{ 'arch.name' || 'Arquitetura Sem Título' }}</h2>
-        <span class="card-date">{{ 'arch.saveDate' | date:'dd/MM/yyyy HH:mm' }}</span>
-      </div>
-      <div class="card-content">
-        <h3>Resumo da Arquitetura:</h3>
-        <p><strong>Custo Total Estimado:</strong> {{ 'arch.totalCost' | currency:'BRL':'symbol':'1.2-2' }}</p>
-        <p><strong>Origem dos Dados:</strong> {{ 'arch.extract.origin' }}</p>
-        <p><strong>Frequência de Extração:</strong> {{ "arch.extract.frequency" }}</p>
-        <p><strong>Complexidade da Transformação:</strong> {{ 'arch.transform.complexity' }}</p>
-        <p><strong>Destino dos Dados:</strong> {{ 'arch.load.storeLocation' }}</p>
+    <div class="architecture-grid">
+      <div class="architecture-card mat-elevation-z2" *ngFor="let arch of architectures; let i = index">
+        <div class="card-header">
+          <h2 class="card-title">{{ arch.architectureName || 'Arquitetura Sem Título' }}</h2>
+          <span class="card-date">{{ arch.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="card-content">
+          <h3>Resumo da Arquitetura:</h3>
+          <p><strong>Custo Total Estimado:</strong> {{ arch.totalPrice | currency:'USD':'symbol':'1.2-2' }}</p>
+          <p><strong>Origem dos Dados:</strong> {{ arch.extractData.origin }}</p>
+          <p><strong>Frequência de Extração:</strong> {{ arch.extractData.frequency }}</p>
+          <p><strong>Complexidade da Transformação:</strong> {{ arch.transformData.complexity }}</p>
+          <p><strong>Destino dos Dados:</strong> {{ arch.loadData.storeLocation }}</p>
 
-        <button class="view-details-button">Ver Detalhes</button>
-      </div>
-      <div class="card-actions">
-        <button class="delete-button">Excluir</button>
+          <button class="view-details-button" (click)="seeDetails(arch.id)">Ver Detalhes</button>
+        </div>
+        <div class="card-actions">
+          <button class="delete-button" (click)="deleteRecommendation(arch.id)">Excluir</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <ng-template #loadingOrNoData>
+    <div *ngIf="isLoading; else actualNoData" class="loading-message">
+      <mat-spinner></mat-spinner> Carregando histórico...
+    </div>
+    <ng-template #actualNoData>
+      <div class="no-data-message">
+        <p>Você ainda não salvou nenhuma arquitetura.</p>
+        <p>Gere uma arquitetura na tela principal e utilize a opção de salvar!</p>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
+
+<div *ngIf="details">
+  <app-architecture-results-display [isDetails]="true" [architectureResults]="results"></app-architecture-results-display>
 </div>

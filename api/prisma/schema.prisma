@@ -24,13 +24,14 @@ model User {
 }
 
 model Recommendation {
-  id            String   @id @default(uuid())
-  userId        String
-  createdAt     DateTime @default(now())
-  extractData   String
-  transformData String
-  loadData      String
-  response      String
+  id               String   @id @default(uuid())
+  userId           String
+  createdAt        DateTime @default(now())
+  architectureName String
+  extractData      String
+  transformData    String
+  loadData         String
+  response         String
 
   user User @relation(fields: [userId], references: [id])
 

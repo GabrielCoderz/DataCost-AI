@@ -1,0 +1,223 @@
+// Variáveis para consistência de tema (é uma boa prática tê-las em um arquivo global ou similar)
+$primary-color: #007bff; // Azul vibrante para elementos principais
+$accent-color: #ff4081; // Cor de destaque para botões
+$secondary-text-color: #6c757d; // Cinza para textos secundários
+$background-color: #f8f9fa; // Fundo geral da página
+$card-background: #ffffff; // Fundo dos cartões
+$text-color: #343a40; // Cor principal do texto
+$border-color: #e0e0e0; // Cor suave para bordas
+
+// Estilos para o container principal do componente de resultados
+:host {
+  display: block; // Importante para que o componente se comporte como um bloco e aplique espaçamento
+  // padding: 20px;
+  // background-color: $background-color;
+  border-radius: 8px;
+  margin-top: 20px; // Espaçamento superior para separar de outros elementos
+  margin: 1% 5%;
+  // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); // Sombra sutil para dar profundidade
+}
+
+// Estilos para o botão de salvar resultado
+.btn-salvar-resultado {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+}
+
+.btn-reload-resultado {
+  position: fixed;
+  bottom: 63px;
+  right: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  // background-color: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+}
+
+// Estilos para o grupo de abas (MatTabGroup)
+mat-tab-group {
+  // margin-top: 25px; // Espaçamento acima das abas para separar do botão de salvar
+  .mat-mdc-tab-body-wrapper {
+    padding: 20px 0; // Espaçamento interno para o conteúdo de cada aba
+  }
+}
+
+// Estilos para os cartões de cada etapa ETL (Extração, Transformação, Carga)
+.etl-card {
+  background-color: $card-background;
+  // margin-bottom: 25px; // Espaçamento entre os cartões
+  margin-top: 1rem;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Sombra para os cartões
+
+  .etl-title {
+    font-size: 1.6em;
+    color: $primary-color;
+    margin-bottom: 20px;
+    border-bottom: 2px solid lighten($primary-color, 35%); // Linha decorativa
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    // Estilos para os ícones no título (🛠️ 🔄 📦)
+    &:before {
+      margin-right: 10px;
+      font-size: 1.2em;
+    }
+  }
+
+  .etl-content {
+    p {
+      margin-bottom: 10px;
+      line-height: 1.6;
+      color: $text-color;
+
+      strong {
+        color: darken($text-color, 10%); // Destaca os labels
+      }
+    }
+
+    .section-label {
+      font-weight: bold;
+      color: $primary-color;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 15px;
+
+      li {
+        background-color: lighten($background-color, 2%);
+        border-left: 4px solid $primary-color; // Barra lateral colorida
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 4px;
+        font-size: 0.95em;
+        color: $text-color;
+      }
+    }
+  }
+}
+
+// Estilos específicos para cada tipo de cartão ETL para diferenciação visual
+.etl-card.extract {
+  .etl-title {
+    color: #007bff; // Azul para Extração
+    border-color: lighten(#007bff, 35%);
+    li { border-left-color: #007bff; }
+  }
+}
+
+.etl-card.transform {
+  .etl-title {
+    color: #28a745; // Verde para Transformação
+    border-color: lighten(#28a745, 35%);
+    li { border-left-color: #28a745; }
+  }
+}
+
+.etl-card.load {
+  .etl-title {
+    color: #ffc107; // Amarelo para Carga
+    border-color: lighten(#ffc107, 35%);
+    li { border-left-color: #ffc107; }
+  }
+}
+
+// Estilos para os containers de gráficos (se forem descomentados)
+.chart-container {
+  width: 100%;
+  height: 400px; // Altura padrão para gráficos
+  margin-bottom: 30px;
+  margin-top: 1rem;
+  background-color: $card-background;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+// Media Queries para responsividade
+@media (max-width: 768px) {
+  :host {
+    padding: 15px;
+  }
+
+  .btn-salvar-resultado {
+    top: 10px;
+    right: 10px;
+  }
+
+  .etl-card {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .etl-title {
+    font-size: 1.4em;
+  }
+
+  .etl-content p, .etl-content ul li {
+    font-size: 0.9em;
+  }
+
+  .chart-container {
+    height: 300px; // Reduz altura dos gráficos em telas menores
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 10px;
+    margin-top: 15px;
+  }
+
+  .btn-salvar-resultado {
+    position: static; // Botão de salvar não flutua mais
+    display: block;
+    width: fit-content; // Ajusta largura ao conteúdo
+    margin: 0 auto 20px auto; // Centraliza e dá espaçamento inferior
+  }
+
+  .etl-card {
+    padding: 10px;
+  }
+
+  .etl-title {
+    font-size: 1.2em;
+  }
+
+  .etl-content p, .etl-content ul li {
+    font-size: 0.85em;
+  }
+}

@@ -1,0 +1,14 @@
+// Estilos para o conteúdo do modal
+.mat-mdc-dialog-content {
+  padding-bottom: 20px; // Espaçamento inferior para o conteúdo
+}
+
+// Estilos para as ações (botões) do modal
+.mat-mdc-dialog-actions {
+  justify-content: flex-end; // Alinha os botões à direita
+}
+
+// Margem superior para o campo de formulário
+mat-form-field {
+  margin-top: 10px;
+}

@@ -13,7 +13,7 @@
   </mat-card> -->
 
   <ng-container *ngIf="!results">
-    <form [formGroup]="etlForm" (ngSubmit)="onSubmit()">
+    <form class="form-container" [formGroup]="etlForm" (ngSubmit)="onSubmit()">
       <mat-stepper orientation="horizontal" [linear]="isLinear" #stepper>
         <!-- Etapa 1 - Extração -->
         <mat-step class="step" [stepControl]="etlForm.get('extract')!">
@@ -159,12 +159,12 @@
                 </mat-form-field>
               </div>
 
-              <p class="radio-group-space">6. Quais serviços você considera para transformação? (Não obrigatório)</p>
+              <!-- <p class="radio-group-space">6. Quais serviços você considera para transformação? (Não obrigatório)</p>
               <div formArrayName="services">
                 <mat-checkbox *ngFor="let service of transformServices; let i = index" [formControlName]="i">
                   {{ service }}
                 </mat-checkbox>
-              </div>
+              </div> -->
 
               <!-- <mat-form-field>
                 <mat-label>Address</mat-label>
@@ -237,12 +237,12 @@
                 </mat-form-field>
               </div>
 
-            <p class="radio-group-space">5. Quais serviços você deseja usar para armazenamento? (Não obrigatório)</p>
+            <!-- <p class="radio-group-space">5. Quais serviços você deseja usar para armazenamento? (Não obrigatório)</p>
             <div formArrayName="services">
               <mat-checkbox *ngFor="let service of loadServices; let i = index" [formControlName]="i">
                 {{ service }}
               </mat-checkbox>
-            </div>
+            </div> -->
 
             <div class="button-bottom-step-control">
               <!-- <button matButton matStepperPrevious>Back</button>
@@ -266,103 +266,16 @@
     </form>
   </ng-container>
 
+
+
   <ng-container *ngIf="results">
-    <button mat-flat-button class="btn-salvar-resultado" color="accent" (click)="saveResult()">
-      <mat-icon>save</mat-icon> Salvar Resultado
-    </button>
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
-      <mat-tab label="Arquitetura">
-        <!-- Etapa de Extração -->
-        <mat-card class="etl-card extract">
-          <h2 class="etl-title">🛠️ Etapa de Extração</h2>
-          <div class="etl-content">
-            <p><strong>Origem:</strong> {{ etlForm.value.extract.origin }}</p>
-            <p><strong>Frequência:</strong> {{ etlForm.value.extract.frequency }}</p>
-            <p><strong>Tipo:</strong> {{ etlForm.value.extract.processingType }}</p>
-            <p><strong>Volume por job:</strong> {{ etlForm.value.extract.size }} {{ extractSizeSelected }}</p>
+    <!-- <div class="action-buttons-results">
+      <button mat-raised-button color="primary" (click)="saveResult()">Salvar Arquitetura</button>
+      <button mat-stroked-button color="accent">Nova Simulação</button>
+    </div> -->
 
-            <p class="section-label">Recomendação:</p>
-            <ul>
-              <li *ngFor="let item of results.extract">{{ item.servico }}</li>
-            </ul>
-
-            <p class="section-label">Justificativa:</p>
-            <ul>
-              <li *ngFor="let item of results.extract">{{ item.justificativa }}</li>
-            </ul>
-          </div>
-        </mat-card>
-
-        <!-- Etapa de Transformação -->
-        <mat-card class="etl-card transform">
-          <h2 class="etl-title">🔄 Etapa de Transformação</h2>
-          <div class="etl-content">
-            <p><strong>Complexidade:</strong> {{ etlForm.value.transform.complexity }}</p>
-            <p><strong>Frequência:</strong> {{ etlForm.value.transform.frequency }}</p>
-            <p><strong>Tempo:</strong> {{ etlForm.value.transform.duration }}</p>
-            <p><strong>Tipo:</strong> {{ etlForm.value.transform.processingType }}</p>
-            <p><strong>Volume por job:</strong> {{ etlForm.value.transform.size }} {{ transformSizeSelected }}</p>
-
-            <p class="section-label">Recomendação:</p>
-            <ul>
-              <li *ngFor="let item of results.transform">{{ item.servico }}</li>
-            </ul>
-
-            <p class="section-label">Justificativa:</p>
-            <ul>
-              <li *ngFor="let item of results.transform">{{ item.justificativa }}</li>
-            </ul>
-          </div>
-        </mat-card>
-
-        <!-- Etapa de Carga -->
-        <mat-card class="etl-card load">
-          <h2 class="etl-title">📦 Etapa de Carga</h2>
-          <div class="etl-content">
-            <p><strong>Destino:</strong> {{ etlForm.value.load.storeLocation }}</p>
-            <p><strong>Precisa de SQL?</strong> {{ etlForm.value.load.needSQL }}</p>
-            <p><strong>Frequência:</strong> {{ etlForm.value.load.frequency }}</p>
-            <p><strong>Volume por mês:</strong> {{ etlForm.value.load.size }} {{ loadSizeSelected }}</p>
-
-            <p class="section-label">Recomendação:</p>
-            <ul>
-              <li *ngFor="let item of results.load">{{ item.servico }}</li>
-            </ul>
-
-            <p class="section-label">Justificativa:</p>
-            <ul>
-              <li *ngFor="let item of results.load">{{ item.justificativa }}</li>
-            </ul>
-          </div>
-        </mat-card>
-      </mat-tab>
-
-      <mat-tab label="Estimativa de custos">
-        <div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart-container"></div>
-
-        <div *ngIf="chartIndicadores" echarts [options]="chartIndicadores" class="chart-container"></div>
-      </mat-tab>
-
-      <mat-tab label="Detalhes">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          <!-- Position Column -->
-          <ng-container matColumnDef="servico">
-            <th mat-header-cell *matHeaderCellDef> Serviço </th>
-            <td mat-cell *matCellDef="let element"> {{element.servico}} </td>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="descricao">
-            <th mat-header-cell *matHeaderCellDef> Descrição </th>
-            <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </mat-tab>
-    </mat-tab-group>
-  </ng-container>
+  <app-architecture-results-display [architectureResults]="results"></app-architecture-results-display>
+</ng-container>
 </div>
 
 
